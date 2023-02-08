@@ -4,7 +4,7 @@ The goal of this project is to build an outdoor app for adventure seekers and pr
 
 ---
 
-# Team Members
+# Team Members  
 
 Elliott Allmann (Scrum Master)  
 Wondemu Damite (Product Owner)  
