@@ -20,7 +20,7 @@ Please reference the [Product Vision](https://github.com/KSU-SWE6733-Spring2023-
 
 # Product Backlog
 
-Please reference the [Product Backlog](https://github.com/KSU-SWE6733-Spring2023-Team3/development-project) for more information.
+Please reference the [Product Backlog](https://github.com/orgs/KSU-SWE6733-Spring2023-Team3/projects/1) for more information.
 
 # Definition of Ready
 
