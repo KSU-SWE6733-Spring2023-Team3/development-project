@@ -10,6 +10,7 @@ Elliott Allmann (Scrum Master)
 Wondemu Damite   
 Melkyas Eshetu  
 Rush Neighbors (Product Owner)
+
 Collin Williams 
 
 ---
