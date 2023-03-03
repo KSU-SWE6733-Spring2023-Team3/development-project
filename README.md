@@ -7,9 +7,9 @@ The goal of this project is to build an outdoor app for adventure seekers and pr
 # Team Members  
 
 Elliott Allmann (Scrum Master)  
-Wondemu Damite (Product Owner)  
+Wondemu Damite   
 Melkyas Eshetu  
-Rush Neighbors  
+Rush Neighbors (Product Owner)  
 Collin Williams 
 
 ---
