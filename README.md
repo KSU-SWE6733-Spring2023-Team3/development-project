@@ -16,7 +16,7 @@ Collin Williams
 
 # Product Vision
 
-Please reference the [Product Vision](https://github.com/KSU-SWE6733-Spring2023-Team3/development-project/Product%20Vision.md) for more information.
+Please reference the [Product Vision](Product%20Vision.md) for more information.
 
 # Product Backlog
 
@@ -24,7 +24,7 @@ Please reference the [Product Backlog](https://github.com/orgs/KSU-SWE6733-Sprin
 
 # Definition of Ready
 
-Please reference the [Definition of Ready](https://github.com/KSU-SWE6733-Spring2023-Team3/development-project/Definition%20Of%20Ready.md) for more information.
+Please reference the [Definition of Ready](Definition%20Of%20Ready.md) for more information.
 
 # Technical Items
 
