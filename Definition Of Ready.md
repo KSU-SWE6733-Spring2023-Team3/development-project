@@ -47,4 +47,4 @@ As a ___, I want to ___ so that I can ____.
 
 12.	As a front-end developer, I would like to have a new React Native project to build the User Interface in.   
 
-13.      As a user of the online dating application, I would like to have a good matching algorithm, so that I can find compatible matches and have a positive dating experience.   
+13. As a user of the online dating application, I would like to have a good matching algorithm, so that I can find compatible matches and have a positive dating experience.  
