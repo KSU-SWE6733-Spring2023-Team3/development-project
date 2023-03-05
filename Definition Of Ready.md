@@ -23,6 +23,7 @@ Stories will be estimated using [Fibonacci numbers](https://en.wikipedia.org/wik
 ## Story Template
 As a ___, I want to ___ so that I can ____. 
 
+## Initial Stories
 1.	As a solo adventurer, I want to be able to find a partner for my next adventure, so that I can have someone to share the experience with.   
 
 2.	As an experienced adventurer, I want to find partners who share my level of experience and skill, so that I can plan and undertake more challenging adventures.   
