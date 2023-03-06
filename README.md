@@ -26,6 +26,10 @@ Please reference the [Product Backlog](https://github.com/orgs/KSU-SWE6733-Sprin
 
 Please reference the [Definition of Ready](Definition%20Of%20Ready.md) for more information.
 
+# Backlog Prioritization
+
+We prioritized our backlog following the steps mentioned in [Backlog Prioritizing](Backlog%20Prioritizing). 
+
 # Technical Items
 
 ## Tech Stack
@@ -36,7 +40,7 @@ This project uses the [Neo4J](https://neo4j.com/) graph database for storage. Us
 
 ### API
 
-TBD
+We are going to generate an API using [Laravel 10](https://laravel.com/). This API is what will be the system that performs database operations and provides all functionality for the frontend.
 
 ### GUI
 
