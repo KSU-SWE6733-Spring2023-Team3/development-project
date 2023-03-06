@@ -1,9 +1,11 @@
 # development-project
-Development project for KSU SWE 6733 Spring 2023 Team 3.  
+Development project for KSU SWE 6733 Spring 2023 Team 3.    
+
 The goal of this project is to build an outdoor app for adventure seekers and provide all online users seamless access to an experience-driven platform that allows them to connect to a community of outdoor enthusiasts and find a match on criteria simply beyond location.
 
----
+The team makes use of a private Microsoft Teams channel for all collaboration.
 
+---
 # Team Members  
 
 Elliott Allmann (Scrum Master)  
@@ -13,20 +15,22 @@ Rush Neighbors (Product Owner)
 Collin Williams 
 
 ---
+# Project Documents
 
-# Product Vision
+## Product Vision
 
 Please reference the [Product Vision](Product%20Vision.md) for more information.
 
-# Product Backlog
+## Product Backlog
 
+We are using Github Projects for our product management tool. We believe it offers sufficient functionality yet removes unnecessary integration overhead over other options such as Jira or Azure DevOps. 
 Please reference the [Product Backlog](https://github.com/orgs/KSU-SWE6733-Spring2023-Team3/projects/1) for more information.
 
-# Definition of Ready
+## Definition of Ready
 
 Please reference the [Definition of Ready](Definition%20Of%20Ready.md) for more information.
 
-# Backlog Prioritization
+## Backlog Prioritization
 
 We prioritized our backlog following the steps mentioned in [Backlog Prioritizing](Backlog%20Prioritizing). 
 
