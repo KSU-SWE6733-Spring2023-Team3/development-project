@@ -11,7 +11,7 @@ class RegistrationTest extends TestCase
 {
 
 
-    private const USER_CREATE_ENDPOINT = '/user/create';
+    private const USER_CREATE_ENDPOINT = 'api/user';
 
 
     /**
@@ -27,9 +27,14 @@ class RegistrationTest extends TestCase
 
         $response = $this->post(self::USER_CREATE_ENDPOINT, $postData);
         $response->assertStatus(200);
+        $response->assertSuccessful();
+        $response->assertExactJson([
+            'success' => UserController::USER_CREATED_SUCCESS_MSG,
+        ]);
+
+        $user = User::where('email', 'johnfoo@bar.com')->first();
 
 
-        $user = User::where('name', 'John Foo');
         $this->assertArrayHasKey('name', $user);
         $this->assertSame($user['name'], 'John Foo');
     }
@@ -129,6 +134,34 @@ class RegistrationTest extends TestCase
         $response->assertStatus(200);
         $response->assertExactJson([
             'error' => UserController::INVALID_PASSWORD_ERR_MSG,
+        ]);
+    }
+
+    public function testUserCreateEmailAlreadyInUser(): void
+    {
+        $postData = [
+            'name' => 'John Foo',
+            'email' => 'johnfoo@bar.com',
+            'password' => 'somesillypassword'
+        ];
+
+        // Make sure the resource exists
+        $response = $this->post(self::USER_CREATE_ENDPOINT, $postData);
+        $response->assertStatus(200);
+        $response->assertSuccessful();
+
+
+        $user = User::where('name', 'John Foo')->first();
+        $this->assertArrayHasKey('name', $user);
+        $this->assertSame($user['name'], 'John Foo');
+
+
+        // Make the request again, this time it should be a duplicate resource.
+        $response = $this->post(self::USER_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserController::EMAIL_EXISTS_ERR_MSG,
         ]);
     }
 
