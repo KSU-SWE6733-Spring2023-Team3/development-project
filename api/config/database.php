@@ -92,7 +92,7 @@ return [
         ],
         'neo4j' => [
             'driver' => 'neo4j',
-            'host' => '127.0.0.1',
+            'host' => env('DB_HOST', '' ),
             'port' => 7687,
             'username' => 'neo4j',
             'password' => env('DB_PASSWORD', ''),
