@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Http\Controllers\UserController;
 
-class RegistrationTests extends TestCase
+class RegistrationTest extends TestCase
 {
 
 
