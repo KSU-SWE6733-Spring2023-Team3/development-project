@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { z } from 'zod'; // for validation library 
+import globalStyles from '../../styles/global';
 
-interface RegistrationFormData {
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-    password: string;
-    profilePicture: string | null;
-}
+
+const registrationSchema = z.object({
+    name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
+    profilePicture: z.string().optional(),
+});
+
+type RegistrationFormData = z.infer<typeof registrationSchema>
 
 const RegistrationScreen: React.FC = () => {
     const [formData, setFormData] = useState<RegistrationFormData>({
-        firstName: '',
-        lastName: '',
-        username: '',
+        name: '',
         email: '',
         password: '',
-        profilePicture: null,
+        profilePicture: '',
     });
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const handleChoosePhoto = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -40,16 +42,8 @@ const RegistrationScreen: React.FC = () => {
         }
     };
 
-    const handleFirstNameChange = (text: string) => {
-        setFormData({ ...formData, firstName: text });
-    };
-
-    const handleLastNameChange = (text: string) => {
-        setFormData({ ...formData, lastName: text });
-    };
-
-    const handleUserNameChange = (text: string) => {
-        setFormData({ ...formData, username: text });
+    const handleNameChange = (text: string) => {
+        setFormData({ ...formData, name: text });
     };
 
     const handleEmailChange = (text: string) => {
@@ -60,18 +54,38 @@ const RegistrationScreen: React.FC = () => {
         setFormData({ ...formData, password: text });
     };
 
-    const handleProfilePictureChange = (uri: string | null) => {
-        setFormData({ ...formData, profilePicture: uri });
-    };
+    const handleSubmit = async () => {
+        const validationResult = registrationSchema.safeParse(formData);
 
-    const handleSubmit = () => {
-        console.log(formData);
+        if (!validationResult.success) {
+            // @ts-ignore
+            setErrors(validationResult.error.flatten().fieldErrors);
+            return;
+        }
+
+        setErrors({});
+        // Perform registration logic with formData
+        await fetch('/api/user/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        
+
+        setFormData({
+            name: '',
+            email: '',
+            password: '',
+            profilePicture: '',
+        })
     };
 
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.title}>Registrations</Text> */}
-            <TouchableOpacity style={styles.profilePictureContainer} onPress={handleChoosePhoto }>
+            <Text style={globalStyles.title}>Registration</Text>
+            <TouchableOpacity style={styles.profilePictureContainer} onPress={handleChoosePhoto}>
                 {formData.profilePicture ? (
                     <Image style={styles.profilePicture} source={{ uri: formData.profilePicture }} />
                 ) : (
@@ -82,44 +96,33 @@ const RegistrationScreen: React.FC = () => {
                 <Text style={styles.profilePictureButtonText}>Choose Photo</Text>
             </TouchableOpacity>
             <TextInput
-                style={styles.input} 
+                style={globalStyles.input}
                 placeholderTextColor="#000000"
-                placeholder="First Name"
-                onChangeText={handleFirstNameChange}
-                value={formData.firstName}
+                placeholder="Name"
+                onChangeText={handleNameChange}
+                value={formData.name}
             />
+             {errors['name'] && <Text style={styles.errorText}>{errors['name']}</Text>}
             <TextInput
-                style={styles.input} 
-                placeholderTextColor="#000000"
-                placeholder="Last Name"
-                onChangeText={handleLastNameChange}
-                value={formData.lastName}
-            />
-            <TextInput
-                style={styles.input} 
-                placeholderTextColor="#000000"
-                placeholder="Username"
-                onChangeText={handleUserNameChange}
-                value={formData.username}
-            />
-            <TextInput
-                style={styles.input} 
+                style={globalStyles.input}
                 placeholderTextColor="#000000"
                 placeholder="Email"
                 onChangeText={handleEmailChange}
                 value={formData.email}
                 keyboardType="email-address"
                 autoCapitalize="none"
-            />
+                />
+                {errors['email'] && <Text style={styles.errorText}>{errors['email']}</Text>}
             <TextInput
-                style={styles.input} 
+                style={globalStyles.input}
                 placeholderTextColor="#000000"
                 secureTextEntry={true}
                 placeholder="Password"
                 onChangeText={handlePasswordChange}
                 // value={formData.password}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                />
+                {errors['password'] && <Text style={styles.errorText}>{errors['password']}</Text>}
+            <TouchableOpacity style={globalStyles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
         </View>
@@ -132,31 +135,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 32,
-    },
-    input: {
-        width: '80%',
-        height: 48,
-        borderWidth: 1,
-        borderColor: '#CCCCCC',
-        borderRadius: 8,
-        paddingHorizontal: 16,
-        marginBottom: 16,
-    },
-    button: {
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-        paddingVertical: 16,
-        paddingHorizontal: 32,
-        marginTop: 16,
-    },
+   
     buttonText: {
         color: '#FFFFFF',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    errorText:{
+        color:'red',
+        fontSize:15
     },
     profilePictureContainer: {
         width: 200,
@@ -172,8 +159,8 @@ const styles = StyleSheet.create({
     profilePicture: {
         width: 200,
         height: 200,
-        borderRadius:100,
-        marginTop:15
+        borderRadius: 100,
+        marginTop: 15
     },
     profilePicturePlaceholder: {
         width: '100%',
