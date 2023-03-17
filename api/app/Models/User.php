@@ -45,4 +45,18 @@ class User extends NeoEloquent
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'UPLOADED');
+    }
+
+    public function profilePhoto()
+    {
+        return $this->hasOne(Photo::class, 'IS_PROFILE_PHOTO');
+    }
+
+
+
 }

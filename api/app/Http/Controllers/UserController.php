@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use function Symfony\Component\String\length;
 
 use App\Models\User;
@@ -69,7 +72,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        // Get the basic data from the request
         $name = $request->input("name") ?? '';
         $email = $request->input("email") ?? '';
         $password = $request->input("password") ?? '';
@@ -95,9 +97,6 @@ class UserController extends Controller
                 ], 200);
         }
 
-        Log::debug($name);
-
-        Log::debug("Is valid name [ " . $this->isValidName($name) ? 'true' : 'false' ." ]");
 
         if(!$this->isValidName($name))
         {
@@ -142,7 +141,8 @@ class UserController extends Controller
 
 
         // Encrypt the password for storage
-        $hashword = bcrypt($password);
+        $hashword = Hash::make($password);
+
 
         // Create the User in the database.
         $user = User::create([
@@ -150,6 +150,21 @@ class UserController extends Controller
             'email' => $email,
             'password' => $hashword,
         ]);
+
+        // Handle the profile photo
+        $base64EncodedPhotoData = $request->input('profilePicture');
+
+        if(!empty($base64EncodedPhotoData))
+        {
+            $photo = $this->storeProfilePhoto($base64EncodedPhotoData);
+
+
+            if(isset($photo))
+            {
+                $user->photos()->save($photo);
+                $user->profilePhoto()->save($photo);
+            }
+        }
 
         return response()->json(['success' => self::USER_CREATED_SUCCESS_MSG], 200);
 
@@ -169,6 +184,30 @@ class UserController extends Controller
         return strlen($password) >= 16;
     }
 
+
+    private function storeProfilePhoto(string $base64EncodedPhotoString)
+    {
+
+        $base64Image = explode(";base64", $base64EncodedPhotoString );
+        $image = explode("image/", $base64Image[0]);
+
+
+
+
+        $imageType = $image[1];
+        $image_base64 = base64_decode($base64Image[1]);
+        $filePath = uniqid() . "." . $imageType;
+
+        Storage::put($filePath, $image_base64);
+
+        $photo = Photo::create([
+            'file_name' => $filePath,
+            'file_path' => $filePath,
+        ]);
+
+
+        return $photo;
+    }
 
     /**
      * Display the specified resource.

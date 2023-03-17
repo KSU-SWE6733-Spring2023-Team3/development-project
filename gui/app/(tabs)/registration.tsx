@@ -8,8 +8,8 @@ import globalStyles from '../../styles/global';
 const registrationSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
     email: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-    profilePicture: z.string().optional(),
+    password: z.string().min(16, { message: "Password must be at least 16 characters" }),
+    profilePicture: z.any()
 });
 
 type RegistrationFormData = z.infer<typeof registrationSchema>
@@ -21,6 +21,10 @@ const RegistrationScreen: React.FC = () => {
         password: '',
         profilePicture: '',
     });
+
+
+
+
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const handleChoosePhoto = async () => {
@@ -37,21 +41,23 @@ const RegistrationScreen: React.FC = () => {
             quality: 1,
         });
 
+
         if (!result.canceled) {
-            setFormData({ ...formData, profilePicture: result.assets[0].uri });
+            setFormData({...formData, profilePicture: result.assets[0].uri});
         }
     };
 
     const handleNameChange = (text: string) => {
-        setFormData({ ...formData, name: text });
+
+        setFormData({...formData, name: text});
     };
 
     const handleEmailChange = (text: string) => {
-        setFormData({ ...formData, email: text });
+        setFormData({...formData, email: text});
     };
 
     const handlePasswordChange = (text: string) => {
-        setFormData({ ...formData, password: text });
+        setFormData({...formData, password: text});
     };
 
     const handleSubmit = async () => {
@@ -64,22 +70,20 @@ const RegistrationScreen: React.FC = () => {
         }
 
         setErrors({});
-        // Perform registration logic with formData
-        await fetch('/api/user/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
-        
+        //
+        let uploadData = new FormData();
+        uploadData.append('name', formData.name);
+        uploadData.append('email', formData.email);
+        uploadData.append('password', formData.password);
+        uploadData.append('profilePicture', formData.profilePicture);
 
-        setFormData({
-            name: '',
-            email: '',
-            password: '',
-            profilePicture: '',
-        })
+
+        // Perform registration logic with formData
+        await fetch('http://localhost:8000/api/user', {
+            method: 'POST',
+            body: uploadData
+        });
+        
     };
 
     return (
@@ -87,7 +91,7 @@ const RegistrationScreen: React.FC = () => {
             <Text style={globalStyles.title}>Registration</Text>
             <TouchableOpacity style={styles.profilePictureContainer} onPress={handleChoosePhoto}>
                 {formData.profilePicture ? (
-                    <Image style={styles.profilePicture} source={{ uri: formData.profilePicture }} />
+                    <Image style={styles.profilePicture} source={{ uri: formData.profilePicture.uri }} />
                 ) : (
                     <View style={styles.profilePicturePlaceholder}>
                         <Text style={styles.profilePicturePlaceholderText}>Upload Profile Picture</Text>
