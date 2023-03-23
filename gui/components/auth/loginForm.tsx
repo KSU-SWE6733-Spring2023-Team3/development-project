@@ -9,12 +9,11 @@ import {getRequest, postRequest} from "./../../util/ajax";
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [iserr, setIsErr] = useState(false)
+    const [iserr, setIsErr] = useState(false);
 
 
     const handleLogin = async () => {
         // Handle login functionality
-        // TODO: call login api here
         if (!email.includes("@") || email.length < 4 || password.length < 16) {
             setIsErr(true)
         } else {
@@ -59,7 +58,6 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      //TODO: Change to registration form component.
       {isLogin ? <Login /> : <div>Here RegistrationForm</div> }
       <Text
         style={styles.toggleText}
