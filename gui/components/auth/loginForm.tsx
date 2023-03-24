@@ -1,12 +1,15 @@
 // Login and SignUp page 
 
-import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
+import {useContext, useState} from 'react';
+import {StyleSheet, View, TextInput, Button, Text, AppConfig} from 'react-native';
 
-import {getRequest, postRequest} from "./../../util/ajax";
+import {postRequest} from "./../../util/ajax";
+import {useAuth} from "./../../context/auth";
 
 // Login Page
 const Login = () => {
+
+    const {signIn} = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [iserr, setIsErr] = useState(false);
@@ -23,51 +26,39 @@ const Login = () => {
             uploadData.append('password', password);
 
             postRequest('api/login', uploadData).then(response => {
-                console.log(response);
-                getRequest('api/user').then(getResponse => {
-                    console.log(getResponse);
-                })
-            })
+                if(response.data == 'Login success') {
+                    signIn(true);
+                } else {
+                    signIn(false);
+                }
+            });
+
         }
     };
 
-        return (
-            <View style={styles.container}>
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                    style={styles.input}
-                />
-                {iserr && <div>Credentials are not valid!</div>}
-                <Button title="Login" onPress={handleLogin}/>
-            </View>
-        );
-    };
-
-
-const App = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
-  return (
-    <View style={styles.container}>
-      {isLogin ? <Login /> : <div>Here RegistrationForm</div> }
-      <Text
-        style={styles.toggleText}
-        onPress={() => setIsLogin(!isLogin)}
-      >
-        {isLogin ? 'Need to create an account?' : 'Already have an account?'}
-      </Text>
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <TextInput
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                style={styles.input}
+            />
+            {iserr && <div>Credentials are not valid!</div>}
+            <Button title="Login" onPress={handleLogin}/>
+        </View>
+    );
 };
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -89,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Login;

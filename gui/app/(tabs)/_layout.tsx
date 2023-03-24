@@ -3,7 +3,7 @@ import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
-
+import SignOut from '../../components/auth/signOut';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -18,6 +18,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
+  <>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -28,6 +29,7 @@ export default function TabLayout() {
           title: 'Tab One',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
+              <>
             <Link href="/modal" asChild>
               <Pressable>
                 {({ pressed }) => (
@@ -40,6 +42,8 @@ export default function TabLayout() {
                 )}
               </Pressable>
             </Link>
+              <SignOut />
+              </>
           ),
         }}
       />
@@ -51,5 +55,6 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+  </>
   );
 }

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,12 +17,16 @@ Route::controller(\App\Http\Controllers\LoginController::class)->group(function(
    Route::post('/login', 'authenticate');
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 
 Route::controller(\App\Http\Controllers\UserController::class)->group(function() {
-   Route::post('/user', 'store');
+    Route::post('/user', 'store');
 });
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::controller(\App\Http\Controllers\UserController::class)->group(function() {
+       Route::get('/user', 'index');
+    });
+});
+
+
+
