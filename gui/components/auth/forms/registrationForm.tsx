@@ -1,10 +1,11 @@
 import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import globalStyles from "../../../styles/global";
-import React, {useState} from "react";
+import * as React from "react";
 import {useAuth} from "../../../context/auth";
 import * as ImagePicker from "expo-image-picker";
 import {postRequest} from "../../../util/ajax";
 import {z} from "zod";
+import {useState} from "react";
 
 
 const registrationSchema = z.object({
