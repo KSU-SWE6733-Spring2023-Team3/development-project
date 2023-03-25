@@ -3,6 +3,8 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'reac
 import * as ImagePicker from 'expo-image-picker';
 import { z } from 'zod'; // for validation library 
 import globalStyles from '../../styles/global';
+import {postRequest} from "../../util/ajax";
+import {useAuth} from "../../context/auth";
 
 
 const registrationSchema = z.object({
@@ -22,6 +24,7 @@ const RegistrationScreen: React.FC = () => {
         profilePicture: '',
     });
 
+    const {signIn} = useAuth();
 
 
 
@@ -79,11 +82,14 @@ const RegistrationScreen: React.FC = () => {
 
 
         // Perform registration logic with formData
-        await fetch('http://localhost:8000/api/user', {
-            method: 'POST',
-            body: uploadData
-        });
-        
+        postRequest('api/user', uploadData).then(response => {
+            if(response.statusText == "OK" ) {
+                signIn(true);
+            } else {
+                signIn(false);
+            }
+        })
+
     };
 
     return (
@@ -193,4 +199,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RegistrationScreen
+export default RegistrationScreen;

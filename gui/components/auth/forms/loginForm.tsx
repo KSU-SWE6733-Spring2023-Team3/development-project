@@ -3,8 +3,8 @@
 import {useContext, useState} from 'react';
 import {StyleSheet, View, TextInput, Button, Text, AppConfig} from 'react-native';
 
-import {postRequest} from "./../../util/ajax";
-import {useAuth} from "./../../context/auth";
+import {postRequest} from "../../../util/ajax";
+import {useAuth} from "../../../context/auth";
 
 // Login Page
 const Login = () => {

@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Slot } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import {Provider} from "../context/auth";
-import LoginLayout from "./(auth)/login";
+import LoginLayout from "../components/auth/login";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -40,7 +40,6 @@ function RootLayoutNav() {
   return (
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />

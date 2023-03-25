@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-import Login from "../../components/auth/loginForm"
+import Login from "../../components/auth/forms/loginForm"
 import * as React from "react";
 
 

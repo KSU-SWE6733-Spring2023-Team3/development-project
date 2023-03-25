@@ -14,7 +14,7 @@ function useProtectedRoute(user) {
         const inAuthGroup = segments[0] === "(auth)";
 
         if (!user && !inAuthGroup) {
-            router.replace('/login');
+            router.replace('/home');
         } else if (user && inAuthGroup) {
             router.replace('/');
         }

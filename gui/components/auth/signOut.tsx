@@ -1,5 +1,6 @@
 import {useAuth} from "../../context/auth";
 import {Text, View} from "react-native";
+import {postRequest} from "../../util/ajax";
 
 
 export default function SignOut() {
@@ -7,7 +8,13 @@ export default function SignOut() {
     const { signOut } = useAuth();
 
     const handleSignOut = () => {
-        signOut();
+
+
+        postRequest('api/logout', {}).then( response => {
+                console.log(response);
+                signOut();
+            }
+        );
     };
 
 
