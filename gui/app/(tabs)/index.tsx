@@ -1,7 +1,7 @@
 import { Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Text, View } from '../../components/Themed';
-
+import Login from "../../components/auth/loginForm"
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
