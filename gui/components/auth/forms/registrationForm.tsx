@@ -1,4 +1,3 @@
-<<<<<<< HEAD:gui/components/auth/forms/registrationForm.tsx
 import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import globalStyles from "../../../styles/global";
 import * as React from "react";
@@ -7,13 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import {postRequest} from "../../../util/ajax";
 import {z} from "zod";
 import {useState} from "react";
-=======
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { z } from 'zod';
-import globalStyles from '../styles/global';
->>>>>>> main:gui/app/registration.tsx
+
 
 
 const registrationSchema = z.object({
@@ -140,15 +133,10 @@ export default function RegistrationForm() {
                 placeholder="Password"
                 onChangeText={handlePasswordChange}
                 // value={formData.password}
-<<<<<<< HEAD:gui/components/auth/forms/registrationForm.tsx
             />
             {errors['password'] && <Text style={styles.errorText}>{errors['password']}</Text>}
             <TouchableOpacity style={globalStyles.button} onPress={handleSubmit}>
-=======
-                />
-                {errors['password'] && <Text style={styles.errorText}>{errors['password']}</Text>}
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
->>>>>>> main:gui/app/registration.tsx
+
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
         </>
@@ -157,70 +145,9 @@ export default function RegistrationForm() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-<<<<<<< HEAD:gui/components/auth/forms/registrationForm.tsx
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+},
 
-=======
-    button: {
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-        paddingVertical: 16,
-        paddingHorizontal: 32,
-        marginTop: 16,
-    },
->>>>>>> main:gui/app/registration.tsx
-    buttonText: {
-        color: '#FFFFFF',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    errorText:{
-        color:'red',
-        fontSize:15
-    },
-    profilePictureContainer: {
-        width: 200,
-        height: 200,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 3,
-        borderColor: '#000',
-        borderRadius: 100,
-        overflow: 'hidden',
-        marginBottom: 20,
-    },
-    profilePicture: {
-        width: 200,
-        height: 200,
-        borderRadius: 100,
-        marginTop: 15
-    },
-    profilePicturePlaceholder: {
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#F2F2F2',
-        //   borderRadius: 8,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    profilePicturePlaceholderText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    profilePictureButton: {
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        marginTop: 8,
-    },
-    profilePictureButtonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
 });

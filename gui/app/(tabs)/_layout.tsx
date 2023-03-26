@@ -2,9 +2,11 @@ import MaterialIcon from '@expo/vector-icons/MaterialIcons';
 import FontAwesomeIcon from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
+import * as React from 'react';
 
 import Colors from '../../constants/Colors';
 import SignOut from '../../components/auth/signOut';
+
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
