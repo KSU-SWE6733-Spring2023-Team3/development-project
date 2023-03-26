@@ -8,9 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+use NeoEloquent;
+
+class User extends NeoEloquent
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $label = 'User';
 
     /**
      * The attributes that are mass assignable.
@@ -41,4 +45,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'UPLOADED');
+    }
+
+    public function profilePhoto()
+    {
+        return $this->hasOne(Photo::class, 'IS_PROFILE_PHOTO');
+    }
+
+
+
 }
