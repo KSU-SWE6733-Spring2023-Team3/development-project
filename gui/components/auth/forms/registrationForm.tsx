@@ -1,3 +1,4 @@
+<<<<<<< HEAD:gui/components/auth/forms/registrationForm.tsx
 import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import globalStyles from "../../../styles/global";
 import * as React from "react";
@@ -6,6 +7,13 @@ import * as ImagePicker from "expo-image-picker";
 import {postRequest} from "../../../util/ajax";
 import {z} from "zod";
 import {useState} from "react";
+=======
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { z } from 'zod';
+import globalStyles from '../styles/global';
+>>>>>>> main:gui/app/registration.tsx
 
 
 const registrationSchema = z.object({
@@ -132,9 +140,15 @@ export default function RegistrationForm() {
                 placeholder="Password"
                 onChangeText={handlePasswordChange}
                 // value={formData.password}
+<<<<<<< HEAD:gui/components/auth/forms/registrationForm.tsx
             />
             {errors['password'] && <Text style={styles.errorText}>{errors['password']}</Text>}
             <TouchableOpacity style={globalStyles.button} onPress={handleSubmit}>
+=======
+                />
+                {errors['password'] && <Text style={styles.errorText}>{errors['password']}</Text>}
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+>>>>>>> main:gui/app/registration.tsx
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
         </>
@@ -147,7 +161,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+<<<<<<< HEAD:gui/components/auth/forms/registrationForm.tsx
 
+=======
+    button: {
+        backgroundColor: '#007AFF',
+        borderRadius: 8,
+        paddingVertical: 16,
+        paddingHorizontal: 32,
+        marginTop: 16,
+    },
+>>>>>>> main:gui/app/registration.tsx
     buttonText: {
         color: '#FFFFFF',
         fontSize: 18,
