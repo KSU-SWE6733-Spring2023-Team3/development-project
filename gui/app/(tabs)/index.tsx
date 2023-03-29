@@ -1,10 +1,13 @@
 import { Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Text, View } from '../../components/Themed';
-import Login from "../../components/auth/loginForm"
+import * as React from "react";
+
+
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
+
       <Image source={{ uri: 'https://images.unsplash.com/photo-1678875922894-7d3210b0787d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' }}
         style={styles.image}
       />

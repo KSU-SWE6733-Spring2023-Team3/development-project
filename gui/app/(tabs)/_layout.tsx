@@ -2,8 +2,10 @@ import MaterialIcon from '@expo/vector-icons/MaterialIcons';
 import FontAwesomeIcon from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
+import * as React from 'react';
 
 import Colors from '../../constants/Colors';
+import SignOut from '../../components/auth/signOut';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -19,6 +21,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
+  <>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -29,6 +32,7 @@ export default function TabLayout() {
           title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
+              <>
             <Link href="/profile" asChild>
               <Pressable>
                 {({ pressed }) => (
@@ -41,6 +45,8 @@ export default function TabLayout() {
                 )}
               </Pressable>
             </Link>
+              <SignOut />
+              </>
           ),
         }}
       />
@@ -52,5 +58,6 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+  </>
   );
 }
