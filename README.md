@@ -26,6 +26,10 @@ The team estimates we can complete 20 points in this sprint. Since this work is 
 
 ## Sprint Burndown Chart
 
+The Sprint Burndown Chart was created using Zenhub, as Github Projects does not have a built-in burndown chart functionality.
+
+The [burndown](burndown.png) screenshot is a screenshot of our burndown chart from Sprint 1, during which we were able to close out all but one of our planned stories.
+
 ## Scrum
 
 Scrums were conducted asynchronously via messaging in our Microsoft Teams channel. We performed one SCRUM via video meet, but it seems the recording expired.
