@@ -39,6 +39,8 @@ Pair programming was done for the Behavior Driven Testing. [The link]() to the v
 ## Test-first
 
 Unit tests can be found in the [API tests directory](api/tests/Feature/RegistrationTest.php). To run the unit tests, follow the instructions in the [API README](api/README.md) to create a new API instance. By default, database connection is not allowed, so contact the team to gain access. Alternatively, you can set up a Neo4j database locally and connect the API to it.
+A screenshot of these running successfully can be seen at [unit-tests.png](unit-tests.png).
+
 
 Behavior driven tests can be found in the [testing](testing) directory.
 
