@@ -46,7 +46,7 @@ Unit tests can be found in the [API tests directory](api/tests/Feature/Registrat
 A screenshot of these running successfully can be seen at [unit-tests.png](unit-tests.png).
 
 
-Behavior driven tests can be found in the [testing](testing) directory.
+Behavior driven tests can be found in the [tests](tests) directory.
 
 ## Sprint Review
 
