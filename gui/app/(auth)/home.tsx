@@ -8,7 +8,7 @@ export default function LoginLayout() {
     return (
         <View style={styles.container}>
             <Text> Welcome to KSU SWE 6733 Spring 2023 Group 3 Development Project! </Text>
-
+            <Text> Hooray we did it!</Text>
             <Link href="/(auth)/login">Login!</Link>
             <Link href="/(auth)/register">Sign Up!</Link>
         </View>
