@@ -38,7 +38,7 @@ The [scrum](scrum.png) screenshot is an example of one of our daily scrums.
 
 ## Pair programming
 
-Pair programming was done for the Behavior Driven Testing. [The link]() to the video can be viewed as long as you are logged in with your Kennesaw account.
+Pair programming was done for the Behavior Driven Testing. [The link](https://kennesawedu.sharepoint.com/sites/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/Shared%20Documents/General/Recordings/Meeting%20in%20_General_-20230328_211641-Meeting%20Recording.mp4?web=1) to the video can be viewed as long as you are logged in with your Kennesaw account.
 
 ## Test-first
 
