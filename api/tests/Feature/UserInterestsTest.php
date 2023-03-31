@@ -62,11 +62,17 @@ class UserInterestsTest extends TestCase
 
     public function test_createSingleUserInterest(): void
     {
-        $postData = [
-          'activity' => 'Hiking',
-          'attitude' => 'Interested',
-          'skillLevel' => 'Skilled',
-        ];
+        $postData =
+            [
+                'interests' =>
+                    [
+                        [
+                            'activity' => 'Hiking',
+                            'attitude' => 'Interested',
+                            'skillLevel' => 'Skilled',
+                        ]
+                    ]
+            ];
 
         $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
 
@@ -79,30 +85,90 @@ class UserInterestsTest extends TestCase
 
     public function test_createMultipleUserInterests(): void
     {
-        $postData = [
+        $postData =
             [
-                'activity' => 'Hiking',
-                'attitude' => 'Frequently Participates',
-                'skillLevel' => 'Skilled'
-            ],
-            [
-                'activity' => 'Backpacking',
-                'attitude' => 'Currently Learning',
-                'skillLevel' => 'Novice'
-            ],
-            [
-                'activity' => 'Camping',
-                'attitude' => 'Interested',
-                'skillLevel' => 'Moderate'
-            ],
-
-        ];
+                'interests' =>
+                [
+                    [
+                        'activity' => 'Hiking',
+                        'attitude' => 'Frequently Participates',
+                        'skillLevel' => 'Skilled'
+                    ],
+                    [
+                        'activity' => 'Backpacking',
+                        'attitude' => 'Currently Learning',
+                        'skillLevel' => 'Novice'
+                    ],
+                    [
+                        'activity' => 'Camping',
+                        'attitude' => 'Interested',
+                        'skillLevel' => 'Moderate'
+                    ],
+                ]
+            ];
 
         $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
 
         $response->assertStatus(200);
         $response->assertExactJson([
             'success' => UserInterestController::INTEREST_ADDED,
+        ]);
+    }
+
+    public function test_noActivityError(): void
+    {
+        $postData = [
+            'interests' => [
+                [
+                    'attitude' => 'Currently Learning',
+                    'skillLevel' => 'Novice'
+                ]
+            ]
+        ];
+
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserInterestController::NO_ACTIVITY_ERR_MSG,
+        ]);
+    }
+
+    public function test_noAttitudeError(): void
+    {
+        $postData = [
+            'interests' => [
+                [
+                    'activity' => 'Hiking',
+                    'skillLevel' => 'Novice'
+                ]
+            ]
+        ];
+
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserInterestController::NO_ATTITUDE_ERR_MSG,
+        ]);
+    }
+
+    public function test_noSkillLevelError(): void
+    {
+        $postData = [
+            'interests' => [
+                [
+                    'activity' => 'Hiking',
+                    'attitude' => 'Currently Learning',
+                ]
+            ]
+        ];
+
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserInterestController::NO_SKILL_LEVEL_ERR_MSG,
         ]);
     }
 
