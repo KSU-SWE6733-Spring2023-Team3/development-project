@@ -11,7 +11,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Http\Controllers\UserController;
 
-class RegistrationTest extends TestCase
+class UserInterestsTest extends TestCase
 {
 
 
@@ -60,7 +60,7 @@ class RegistrationTest extends TestCase
     }
 
 
-    public function createSingleUserInterestTest(): void
+    public function test_createSingleUserInterest(): void
     {
         $postData = [
           'activity' => 'Hiking',
@@ -75,11 +75,84 @@ class RegistrationTest extends TestCase
             'success' => UserInterestController::INTEREST_ADDED,
         ]);
 
-
-
     }
 
+    public function test_createMultipleUserInterests(): void
+    {
+        $postData = [
+            [
+                'activity' => 'Hiking',
+                'attitude' => 'Frequently Participates',
+                'skillLevel' => 'Skilled'
+            ],
+            [
+                'activity' => 'Backpacking',
+                'attitude' => 'Currently Learning',
+                'skillLevel' => 'Novice'
+            ],
+            [
+                'activity' => 'Camping',
+                'attitude' => 'Interested',
+                'skillLevel' => 'Moderate'
+            ],
+
+        ];
+
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'success' => UserInterestController::INTEREST_ADDED,
+        ]);
+    }
+
+    public function test_invalidActivityError(): void
+    {
+        $postData = [
+            'activity' => 'Invalid Activity',
+            'attitude' => 'Interested',
+            'skillLevel' => 'Novice'
+        ];
+
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserInterestController::INVALID_ACTIVITY_ERR_MSG,
+        ]);
+    }
+
+    public function test_invalidAttitudeError(): void
+    {
+        $postData = [
+            'activity' => 'Hiking',
+            'attitude' => 'Invalid Attitude',
+            'skillLevel' => 'Novice'
+        ];
+
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserInterestController::INVALID_ATTITUDE_ERR_MSG,
+        ]);
+    }
+
+    public function test_invalidSkillLevelError(): void
+    {
+        $postData = [
+            'activity' => 'Hiking',
+            'attitude' => 'Interested',
+            'skillLevel' => 'Invalid Skill Level',
+        ];
 
 
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserInterestController::INVALID_SKILL_LEVEL_ERR_MSG,
+        ]);
+    }
 
 }
