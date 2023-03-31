@@ -221,4 +221,20 @@ class UserInterestsTest extends TestCase
         ]);
     }
 
+    public function test_interestsKeyNotSet(): void
+    {
+        $postData = [
+            'activity' => 'Hiking',
+            'attitude' => 'Interested',
+            'skillLevel' => 'Novice',
+        ];
+
+        $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'error' => UserInterestController::INTERESTS_KEY_NOT_FOUND_ERR_MSG,
+        ]);
+    }
+
 }
