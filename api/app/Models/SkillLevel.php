@@ -20,5 +20,8 @@ class SkillLevel extends NeoEloquent
         'Professional'
     ];
 
+    protected $fillable = [
+        'name'
+    ];
 
 }

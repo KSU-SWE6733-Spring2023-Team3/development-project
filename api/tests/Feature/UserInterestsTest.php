@@ -175,9 +175,13 @@ class UserInterestsTest extends TestCase
     public function test_invalidActivityError(): void
     {
         $postData = [
-            'activity' => 'Invalid Activity',
-            'attitude' => 'Interested',
-            'skillLevel' => 'Novice'
+            'interests' => [
+              [
+                  'activity' => 'Invalid Activity',
+                  'attitude' => 'Interested',
+                  'skillLevel' => 'Novice'
+              ]
+            ]
         ];
 
         $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
@@ -191,9 +195,14 @@ class UserInterestsTest extends TestCase
     public function test_invalidAttitudeError(): void
     {
         $postData = [
-            'activity' => 'Hiking',
-            'attitude' => 'Invalid Attitude',
-            'skillLevel' => 'Novice'
+            'interests' => [
+                [
+                    'activity' => 'Hiking',
+                    'attitude' => 'Invalid Attitude',
+                    'skillLevel' => 'Novice'
+                ]
+            ]
+
         ];
 
         $response = $this->post(self::USER_INTEREST_CREATE_ENDPOINT, $postData);
@@ -207,9 +216,13 @@ class UserInterestsTest extends TestCase
     public function test_invalidSkillLevelError(): void
     {
         $postData = [
-            'activity' => 'Hiking',
-            'attitude' => 'Interested',
-            'skillLevel' => 'Invalid Skill Level',
+            'interests' => [
+                [
+                    'activity' => 'Hiking',
+                    'attitude' => 'Interested',
+                    'skillLevel' => 'Invalid Skill Level',
+                ]
+            ]
         ];
 
 

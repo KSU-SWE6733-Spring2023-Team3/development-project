@@ -19,4 +19,8 @@ class Attitude extends NeoEloquent
         'Wishes to do more often',
     ];
 
+    protected $fillable = [
+        'name'
+    ];
+
 }

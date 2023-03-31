@@ -34,4 +34,8 @@ class Activity extends NeoEloquent
         'Hunting',
     ];
 
+    protected $fillable = [
+        'name'
+    ];
+
 }

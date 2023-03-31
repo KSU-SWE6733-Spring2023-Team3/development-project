@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(\App\Http\Controllers\LoginController::class)->group(function() {
-   Route::post('/login', 'authenticate');
+   Route::post('/login', 'authenticate')->name('login');
 });
 
 
@@ -29,6 +29,10 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::controller(App\Http\Controllers\LogoutController::class)->group(function() {
         Route::get('/logout', 'logout');
+    });
+
+    Route::controller(App\Http\Controllers\UserInterestController::class)->group(function() {
+        Route::post('/user/interest', 'store');
     });
 });
 
