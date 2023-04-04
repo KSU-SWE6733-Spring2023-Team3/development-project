@@ -37,8 +37,9 @@ class UserInterestsCreateTest extends TestCase
 
         User::query()->delete();
         User::create([
+            'name' => 'John Foo',
             'email' => self::EMAIL,
-            'password' => Hash::make(self::PASSWORD)
+            'password' => Hash::make(self::PASSWORD),
         ]);
 
 
@@ -139,9 +140,9 @@ class UserInterestsCreateTest extends TestCase
         ]);
 
         $user = User::where('email', self::EMAIL)->first();
-        $this->assertSame(['Hiking', 'Backpacking', 'Camping'], $user->interests()->activities());
-        $this->assertSame(['Frequently Participates', 'Currently Learning', 'Interested'], $user->interests()->attitudes());
-        $this->assertSame(['Advanced', 'Novice', 'Moderate'], $user->interests()->skillLevels());
+        $this->assertSame(['Hiking', 'Backpacking', 'Camping'], $user->interests()->activity());
+        $this->assertSame(['Frequently Participates', 'Currently Learning', 'Interested'], $user->interests()->attitude());
+        $this->assertSame(['Advanced', 'Novice', 'Moderate'], $user->interests()->skillLevel());
     }
 
     public function test_noActivityError(): void

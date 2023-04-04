@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Attitude;
 use App\Models\SkillLevel;
+use App\Models\UserInterest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserInterestController extends Controller
 {
@@ -79,8 +81,16 @@ class UserInterestController extends Controller
 
             $user = $request->user();
 
-            // TODO: Set up NeoEloquent relationships between Activity, Attitude, and SkillLevel.
+            $activity = Activity::where('name', $userInterest['activity'])->first();
+            $attitude = Attitude::where('name', $userInterest['attitude'])->first();
+            $skillLevel = SkillLevel::where('name', $userInterest['skillLevel'])->first();
 
+            $interest = new UserInterest(['name' => $user->email]);
+            $interest->activity()->save($activity);
+            $interest->attitude()->save($attitude);
+            $interest->skillLevel()->save($skillLevel);
+
+//            $user->interests()->save($interest);
 
         }
 

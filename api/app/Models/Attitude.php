@@ -23,4 +23,11 @@ class Attitude extends NeoEloquent
         'name'
     ];
 
+    protected $label = 'Attitude';
+
+    public function interest()
+    {
+        return $this->belongsTo(UserInterest::class, 'HAS_ATTITUDE');
+    }
+
 }

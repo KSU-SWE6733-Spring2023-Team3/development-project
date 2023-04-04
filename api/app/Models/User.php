@@ -57,5 +57,10 @@ class User extends NeoEloquent implements Authenticatable
     }
 
 
+    public function interests()
+    {
+        return $this->hasMany(UserInterest::class, 'HAS_INTEREST');
+    }
+
 
 }

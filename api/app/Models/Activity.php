@@ -38,4 +38,11 @@ class Activity extends NeoEloquent
         'name'
     ];
 
+    protected $label = 'Activity';
+
+    public function interest()
+    {
+        return $this->belongsTo(UserInterest::class, 'IN_ACTIVITY');
+    }
+
 }

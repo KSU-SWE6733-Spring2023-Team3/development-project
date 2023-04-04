@@ -23,5 +23,11 @@ class SkillLevel extends NeoEloquent
     protected $fillable = [
         'name'
     ];
+    protected $label = 'SkillLevel';
+
+    public function interest()
+    {
+        return $this->belongsTo(UserInterest::class, 'AT_SKILL_LEVEL');
+    }
 
 }
