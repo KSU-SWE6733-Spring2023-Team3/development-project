@@ -10,9 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 use App\Models\User;
-use App\Http\Controllers\UserController;
 
-class UserInterestsTest extends TestCase
+class UserInterestsCreateTest extends TestCase
 {
 
 
@@ -100,6 +99,11 @@ class UserInterestsTest extends TestCase
             'success' => UserInterestController::INTEREST_ADDED,
         ]);
 
+        $user = User::where('email', self::EMAIL)->first();
+        $this->assertSame(['Hiking'], $user->interests()->activities());
+        $this->assertSame(['Interested'], $user->interests()->attitudes());
+        $this->assertSame(['Advanced'], $user->interests()->skillLevels());
+
     }
 
     public function test_createMultipleUserInterests(): void
@@ -133,6 +137,11 @@ class UserInterestsTest extends TestCase
         $response->assertExactJson([
             'success' => UserInterestController::INTEREST_ADDED,
         ]);
+
+        $user = User::where('email', self::EMAIL)->first();
+        $this->assertSame(['Hiking', 'Backpacking', 'Camping'], $user->interests()->activities());
+        $this->assertSame(['Frequently Participates', 'Currently Learning', 'Interested'], $user->interests()->attitudes());
+        $this->assertSame(['Advanced', 'Novice', 'Moderate'], $user->interests()->skillLevels());
     }
 
     public function test_noActivityError(): void
