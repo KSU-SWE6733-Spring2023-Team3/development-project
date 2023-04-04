@@ -6,6 +6,7 @@ use App\Http\Controllers\UserInterestController;
 use App\Models\Activity;
 use App\Models\Attitude;
 use App\Models\SkillLevel;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 use App\Models\User;
@@ -16,19 +17,18 @@ class UserInterestsTest extends TestCase
 
 
     private const USER_INTEREST_CREATE_ENDPOINT = 'api/user/interest';
-    private const USERNAME = "johnfoo@bar.com";
+    private const EMAIL = "johnfoo@bar.com";
     private const PASSWORD = 'somesillypassword';
 
     private function login()
     {
         $postData = [
-          'username' => self::USERNAME,
+          'email' => self::EMAIL,
           'password' => self::PASSWORD,
         ];
 
-        $this->get('sanctum/csrf-cookie');
+        // Session is stored in the class ($this), so we don't need to do weird header stuff.
         $this->post('api/login', $postData);
-
     }
 
 
@@ -38,8 +38,8 @@ class UserInterestsTest extends TestCase
 
         User::query()->delete();
         User::create([
-            'username' => self::USERNAME,
-            'password' => self::PASSWORD
+            'email' => self::EMAIL,
+            'password' => Hash::make(self::PASSWORD)
         ]);
 
 
@@ -88,7 +88,7 @@ class UserInterestsTest extends TestCase
                         [
                             'activity' => 'Hiking',
                             'attitude' => 'Interested',
-                            'skillLevel' => 'Skilled',
+                            'skillLevel' => 'Advanced',
                         ]
                     ]
             ];
@@ -112,7 +112,7 @@ class UserInterestsTest extends TestCase
                     [
                         'activity' => 'Hiking',
                         'attitude' => 'Frequently Participates',
-                        'skillLevel' => 'Skilled'
+                        'skillLevel' => 'Advanced'
                     ],
                     [
                         'activity' => 'Backpacking',
