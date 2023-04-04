@@ -25,6 +25,14 @@ class UserInterestController extends Controller
     {
         $userInterests = $request->input('interests');
 
+
+        if(empty($userInterests))
+        {
+            return response()->json([
+                'error' => self::INTERESTS_KEY_NOT_FOUND_ERR_MSG
+            ], 200);
+        }
+
         foreach($userInterests as $userInterest)
         {
             if (empty($userInterest['activity']))
@@ -73,7 +81,12 @@ class UserInterestController extends Controller
 
             // TODO: Set up NeoEloquent relationships between Activity, Attitude, and SkillLevel.
 
+
         }
+
+        return response()->json([
+            'success' => self::INTEREST_ADDED
+        ], 200);
     }
 
     private function isValidActivity($activity): bool
