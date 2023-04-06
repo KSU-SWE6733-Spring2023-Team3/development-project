@@ -310,6 +310,6 @@ class UserInterestsCreateTest extends TestCase
             'error' => UserInterestController::INTERESTS_KEY_NOT_FOUND_ERR_MSG,
         ]);
     }
-    
+
 
 }
