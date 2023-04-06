@@ -6,6 +6,7 @@ use App\Http\Controllers\UserInterestController;
 use App\Models\Activity;
 use App\Models\Attitude;
 use App\Models\SkillLevel;
+use App\Models\UserInterest;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -80,6 +81,8 @@ class UserInterestsCreateTest extends TestCase
 
     public function test_createSingleUserInterest(): void
     {
+        // Delete existing UserInterest entries
+        UserInterest::query()->delete();
         $this->login();
         $postData =
             [
@@ -101,14 +104,17 @@ class UserInterestsCreateTest extends TestCase
         ]);
 
         $user = User::where('email', self::EMAIL)->first();
-        $this->assertSame(['Hiking'], $user->interests()->activities());
-        $this->assertSame(['Interested'], $user->interests()->attitudes());
-        $this->assertSame(['Advanced'], $user->interests()->skillLevels());
+
+        $this->assertSame('Hiking', $user->interests()->first()->activity()->first()->name);
+        $this->assertSame('Interested', $user->interests()->first()->attitude()->first()->name);
+        $this->assertSame('Advanced', $user->interests()->first()->skillLevel()->first()->name);
 
     }
 
     public function test_createMultipleUserInterests(): void
     {
+        // Delete existing UserInterest entries
+        UserInterest::query()->delete();
         $this->login();
         $postData =
             [
@@ -139,11 +145,29 @@ class UserInterestsCreateTest extends TestCase
             'success' => UserInterestController::INTEREST_ADDED,
         ]);
 
+
+        $activities = [];
+        $attitudes = [];
+        $skillLevels = [];
+
         $user = User::where('email', self::EMAIL)->first();
-        $this->assertSame(['Hiking', 'Backpacking', 'Camping'], $user->interests()->activity());
-        $this->assertSame(['Frequently Participates', 'Currently Learning', 'Interested'], $user->interests()->attitude());
-        $this->assertSame(['Advanced', 'Novice', 'Moderate'], $user->interests()->skillLevel());
+
+        $interests = $user->interests()->get();
+
+        foreach($interests as $interest)
+        {
+            $activities[] = $interest->activity()->first()->name;
+            $attitudes[] = $interest->attitude()->first()->name;
+            $skillLevels[] = $interest->skillLevel()->first()->name;
+        }
+
+        // These come back in reverse order of how they were posted. That's OK.
+        $this->assertSame(['Camping', 'Backpacking', 'Hiking'], $activities);
+        $this->assertSame(['Interested', 'Currently Learning', 'Frequently Participates' ], $attitudes);
+        $this->assertSame(['Moderate', 'Novice', 'Advanced' ], $skillLevels);
     }
+
+
 
     public function test_noActivityError(): void
     {
@@ -286,5 +310,6 @@ class UserInterestsCreateTest extends TestCase
             'error' => UserInterestController::INTERESTS_KEY_NOT_FOUND_ERR_MSG,
         ]);
     }
+    
 
 }
