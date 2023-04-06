@@ -1,6 +1,6 @@
-Feature:  Check Log In Page
+Feature:  Check Registration Page
 
-    Scenario: User logs in to our website
+    Scenario: User registers in to our website
         Given a user launches Chrome
         When  a user opens our homepage
         And   they click the login page

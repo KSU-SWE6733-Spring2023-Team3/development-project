@@ -1,0 +1,9 @@
+Feature: Check Log In Page # features/login.feature:1
+
+  Scenario: User logs in to our website         # features/login.feature:3
+    Given a user launches Chrome                # features/steps/steps.py:8
+    When a user opens our homepage              # features/steps/steps.py:13
+    And they click the login page               # features/steps/steps.py:17
+    Then the user successfully logs in          # features/steps/steps.py:25
+    And the page displays Sign Out as an option # features/steps/steps.py:34
+
