@@ -17,6 +17,9 @@ class UserInterestsGetTest extends TestCase
 
 
     private const USER_INTEREST_GET_ENDPOINT = 'api/user/interest';
+    private const GET_ACTIVITIES_ENDPOINT = 'api/activity';
+    private const GET_ATTITUDES_ENDPOINT = 'api/attitude';
+    private const GET_SKILL_LEVELS_ENDPOINT = 'api/skillLevel';
     private const EMAIL_1 = "johnfoo@bar.com";
     private const EMAIL_2 = "janebar@baz.com";
     private const PASSWORD = 'somesillypassword';
@@ -198,5 +201,43 @@ class UserInterestsGetTest extends TestCase
     }
 
 
+    public function test_getActivities(): void
+    {
+        $this->login(self::EMAIL_1);
+
+        $response = $this->get(self::GET_ACTIVITIES_ENDPOINT);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => []
+        ]);
+        $this->assertEqualsCanonicalizing(Activity::PRESET_VALUES, $response['success']);
+    }
+
+    public function test_getAttitudes(): void
+    {
+        $this->login(self::EMAIL_1);
+
+        $response = $this->get(self::GET_ATTITUDES_ENDPOINT);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => []
+        ]);
+        $this->assertEqualsCanonicalizing(Attitude::PRESET_VALUES, $response['success']);
+    }
+
+    public function test_getSkillLevels(): void
+    {
+        $this->login(self::EMAIL_1);
+
+        $response = $this->get(self::GET_SKILL_LEVELS_ENDPOINT);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => []
+        ]);
+        $this->assertEqualsCanonicalizing(SkillLevel::PRESET_VALUES, $response['success']);
+    }
 
 }
