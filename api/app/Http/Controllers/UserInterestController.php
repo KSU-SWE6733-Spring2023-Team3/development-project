@@ -174,4 +174,52 @@ class UserInterestController extends Controller
 
     }
 
+
+    public function activities()
+    {
+        $activities = Activity::query()->get();
+
+        $activityArr = [];
+
+        foreach($activities as $activity)
+        {
+            $activityArr[] = $activity->first()->name;
+        }
+
+        return response()->json([
+            'success' => $activityArr
+        ],200);
+    }
+
+    public function attitudes()
+    {
+        $attitudes = Attitude::query()->get();
+
+        $attitudeArr = [];
+        foreach ($attitudes as $attitude)
+        {
+            $attitudeArr[] = $attitude->first()->name;
+        }
+
+        return response()->json([
+            'success' => $attitudeArr
+        ],200);
+    }
+
+    public function skillLevels()
+    {
+        $skillLevels = SkillLevel::query()->get();
+
+        $skillLevelArr = [];
+
+        foreach($skillLevels as $skillLevel)
+        {
+            $skillLevelArr[] = $skillLevel->first()->name;
+        }
+
+        return response()->json([
+            'success' => $skillLevelArr
+        ],200);
+    }
+
 }

@@ -35,6 +35,9 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/user/interest', 'store');
         Route::get('/user/interest', 'list');
         Route::get('/user/interest/{email}', 'show');
+        Route::get('/activity', 'activities');
+        Route::get('/attitude', 'attitudes');
+        Route::get('/skillLevel', 'skillLevels');
     });
 });
 
