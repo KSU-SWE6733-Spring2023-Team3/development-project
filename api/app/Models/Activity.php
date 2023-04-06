@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 
-use NeoEloquent;
+use Vinelab\NeoEloquent\Eloquent\Model as NeoEloquent;
 
 class Activity extends NeoEloquent
 {
