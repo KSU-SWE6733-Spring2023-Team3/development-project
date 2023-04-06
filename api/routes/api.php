@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::controller(App\Http\Controllers\UserInterestController::class)->group(function() {
         Route::post('/user/interest', 'store');
+        Route::get('/user/interest', 'list');
+        Route::get('/user/interest/{email}', 'show');
     });
 });
 

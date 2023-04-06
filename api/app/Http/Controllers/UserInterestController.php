@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Attitude;
 use App\Models\SkillLevel;
+use App\Models\User;
 use App\Models\UserInterest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Session;
 
 class UserInterestController extends Controller
 {
@@ -20,6 +22,7 @@ class UserInterestController extends Controller
     const INVALID_ACTIVITY_ERR_MSG = "Activity provided is not one of the accepted values.";
     const INVALID_ATTITUDE_ERR_MSG = "Attitude provided is not one of the accepted values.";
     const INVALID_SKILL_LEVEL_ERR_MSG = "Skill Level provided is not one of the accepted values.";
+    const INVALID_USERNAME_ERR_MSG = "Username not found, cannot retreive interests";
 
     const INTERESTS_KEY_NOT_FOUND_ERR_MSG = "[ interests ] key required but not provided.";
 
@@ -119,6 +122,56 @@ class UserInterestController extends Controller
     private function isValidSkillLevel($skillLevel): bool
     {
         return SkillLevel::where('name', $skillLevel)->exists();
+    }
+
+
+    public function show($username)
+    {
+        $user = User::where('email', $username)->first();
+
+        if(!isset($user))
+        {
+            return response()->json([
+                'error' => self::INVALID_USERNAME_ERR_MSG,
+            ], 200);
+        }
+
+        return response()->json([
+            'success' => $this->getUserInterestsArray($user),
+        ]);
+
+    }
+
+    public function list(Request $request)
+    {
+        $user = $request->user();
+
+
+        $interests = $this->getUserInterestsArray($user);
+
+        return response()->json([
+            'success' => $interests,
+        ], 200);
+    }
+
+
+    private function getUserInterestsArray(User $user): array
+    {
+        $interests = [];
+
+        foreach($user->interests()->get() as $item)
+        {
+            $tempArr = [];
+
+            $tempArr['activity'] = $item->activity()->first()->name;
+            $tempArr['attitude'] = $item->attitude()->first()->name;
+            $tempArr['skillLevel'] = $item->skillLevel()->first()->name;
+
+            $interests[] = $tempArr;
+        }
+
+        return $interests;
+
     }
 
 }
