@@ -40,7 +40,6 @@ class UserInterest extends NeoEloquent
     public function user()
     {
         return $this->belongsTo(User::class, 'HAS_INTEREST');
-
     }
 
 

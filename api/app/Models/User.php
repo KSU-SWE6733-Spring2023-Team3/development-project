@@ -26,6 +26,7 @@ class User extends NeoEloquent implements Authenticatable
         'password',
     ];
 
+
     /**
      * The attributes that should be hidden for serialization.
      *

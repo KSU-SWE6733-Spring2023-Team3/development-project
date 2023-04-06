@@ -85,12 +85,19 @@ class UserInterestController extends Controller
             $attitude = Attitude::where('name', $userInterest['attitude'])->first();
             $skillLevel = SkillLevel::where('name', $userInterest['skillLevel'])->first();
 
-            $interest = new UserInterest(['name' => $user->email]);
+
+
+            $interest = UserInterest::create(['name' => $user->email]);
+
             $interest->activity()->save($activity);
+
             $interest->attitude()->save($attitude);
+
             $interest->skillLevel()->save($skillLevel);
 
-//            $user->interests()->save($interest);
+
+
+            $user->interests()->save($interest);
 
         }
 
