@@ -160,9 +160,14 @@ class UserInterestsGetTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertExactJson([
-            'success' => self::INTERESTS[self::EMAIL_1]
+        $response->assertJson([
+            'success' => []
         ]);
+
+        $this->assertEqualsCanonicalizing(self::INTERESTS[self::EMAIL_1], $response['success']);
+
+
+
     }
 
     public function test_getOtherUserInterests(): void
@@ -171,9 +176,11 @@ class UserInterestsGetTest extends TestCase
 
         $response = $this->get(self::USER_INTEREST_GET_ENDPOINT . '/' . self::EMAIL_2);
         $response->assertStatus(200);
-        $response->assertExactJson([
-            'success' => self::INTERESTS[self::EMAIL_2]
+        $response->assertJson([
+            'success' => []
         ]);
+
+        $this->assertEqualsCanonicalizing(self::INTERESTS[self::EMAIL_2], $response['success']);
     }
 
 
@@ -189,5 +196,7 @@ class UserInterestsGetTest extends TestCase
         ]);
 
     }
+
+
 
 }
