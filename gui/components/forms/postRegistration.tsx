@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { TextInput, StyleSheet, TouchableOpacity, Picker } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Text, View } from '../Themed'
 import globalStyles from '../../styles/global'
@@ -11,6 +11,22 @@ const sexInit = [
   { label: 'Female', value: 'female' },
 ]
 
+const oftenInit = [
+  { value: 1, label: 'Less than once a month' },
+  { value: 2, label: 'Once a month' },
+  { value: 3, label: 'Twice a month' },
+  { value: 4, label: 'Weekly' },
+  { value: 5, label: 'More than once a week' },
+]
+
+const experienceInit = [
+  {value:1, label:'Novice'},
+  {value:2, label:'Beginner'},
+  {value:3, label:'Intermediate'},
+  {value:4, label:'Expert'},
+  {value:5, label:'Master'}
+]
+
 export default function PostRegistration() {
   const [sexDrop, setSexDrop] = useState(false)
   const [interestsDrop, setinterestsDrop] = useState(false)
@@ -18,7 +34,7 @@ export default function PostRegistration() {
 
   const [sex, setSex] = useState(null);
   const [interests, setInterests] = useState(null)
-  const [interestsDegree, setInterestsDegree] = useState([])
+  const [interestsDegree, setInterestsDegree] = useState({})
   const [zip, setZip] = useState('')
   const [orientation, setOrientation] = useState('')
   const [age, setAge] = useState('')
@@ -62,23 +78,41 @@ export default function PostRegistration() {
             zIndex={1}
             style={globalStyles.input}
           />
-          {
-            interests && interests?.map((item, index) => {
-              return <View style={{ marginTop: 10 }} key={index}>
-
-                <Text style={{ textTransform: 'capitalize', marginBottom: -7, fontWeight: '500' }}>{item}</Text>
-                <TextInput
-                  style={globalStyles.input}
-                  placeholderTextColor="#000"
-                  placeholder='1-10'
-                  onChangeText={(text) => { handleDegree(item, text) }}
-                  // value={zip}
-                  autoCapitalize="none"
-                />
-              </View>
-            })
-          }
         </View>
+        {
+          interests && interests?.map((item, index) => {
+            return <View style={{ marginTop: 10, width:'80%' }} key={index}>
+
+              <Text style={{ textTransform: 'capitalize', marginBottom: 7, fontWeight: '600', fontSize:16 }}>{item}</Text>
+              <Text style={{ textTransform: 'capitalize', marginTop:7, fontWeight: '400', fontSize:14 }}>How often do you go?</Text>
+              <Picker
+                style={styles.picker}
+                selectedValue={interestsDegree[item]?.often}
+                onValueChange={(itemValue, itemIndex) => {
+                  setInterestsDegree((prev) => ({ ...prev, [item]: { ...prev[item], often: itemValue } })
+                  )
+                }}
+              >
+                {oftenInit.map((option, index) => (
+                  <Picker.Item key={index} label={option.label} value={option.value} />
+                  ))}
+              </Picker>
+                  <Text style={{ textTransform: 'capitalize', marginTop: 7, fontWeight: '400', fontSize:14 }}>What’s your experience level?</Text>
+              <Picker
+                style={styles.picker}
+                selectedValue={interestsDegree[item]?.experience}
+                onValueChange={(itemValue, itemIndex) => {
+                  setInterestsDegree((prev) => ({ ...prev, [item]: { ...prev[item], experience: itemValue } })
+                  )
+                }}
+              >
+                {experienceInit.map((option, index) => (
+                  <Picker.Item key={index} label={option.label} value={option.value} />
+                ))}
+              </Picker>
+            </View>
+          })
+        }
         <TextInput
           style={globalStyles.input}
           placeholderTextColor="#000"
@@ -136,5 +170,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     marginTop: 16,
-  }
+  },
+  picker: {
+    width: '100%',
+    borderRadius: 5,
+    padding: 10,
+    borderWidth: 1, // Remove outline
+    backgroundColor: 'transparent', // Remove outline
+    marginTop:10
+  },
 })
