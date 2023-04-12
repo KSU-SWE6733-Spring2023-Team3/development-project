@@ -19,5 +19,5 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: Execute tests
         env:
-          DB_PASSWORD: ${{secret.DB_PASSWORD}}
+          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
         run: vendor/bin/phpunit
