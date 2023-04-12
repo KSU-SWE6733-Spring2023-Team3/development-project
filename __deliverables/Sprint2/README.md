@@ -14,7 +14,7 @@ The new requirement for Sprint 2 was to implement Continuous Integration. Approp
 ## Sprint Burndown Chart
 
 ## Scrum
-
+https://kennesawedu.sharepoint.com/:v:/r/sites/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/Shared%20Documents/General/Recordings/Meeting%20in%20_General_-20230411_200645-Meeting%20Recording.mp4?csf=1&web=1
 
 
 ## Pair programming
