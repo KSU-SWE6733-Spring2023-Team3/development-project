@@ -17,8 +17,8 @@ const useFetch = (url: any) => {
         setLoading(false);
       }
     };
-    // TODO:  uncomment this line when integration with the server.
-    // fetchData();
+    // TODO: comment when not connected with backend..
+    fetchData();
   }, [url]);
 
   return { data, loading, error };

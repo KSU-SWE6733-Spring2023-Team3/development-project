@@ -1,16 +1,9 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-
-const Item = ({ item }) => (
-  <View style={styles.item}>
-    <Text>{item.activity}</Text>
-    <Text>{item.attitude}</Text>
-    <Text>{item.skillLevel}</Text>
-  </View>
-);
+import InterestTableItem from "./InterestTableItem";
 
 const InterestTable = ({ DATA }) => {
-  const renderItem = ({ item }) => <Item item={item} />;
+  const renderItem = ({ item }) => <InterestTableItem item={item} />;
 
   return (
     <FlatList
@@ -29,16 +22,6 @@ const InterestTable = ({ DATA }) => {
 
 const styles = StyleSheet.create({
   InterestTable: { flexDirection: "row", marginTop: "3px", marginLeft: "3px" },
-  item: {
-    backgroundColor: "#e6e6e6",
-    borderRadius: 5,
-    padding: "5px 10px",
-    marginRight: "10px",
-    marginBottom: "10px",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
   itemText: {
     fontSize: "14px",
     color: "#333",

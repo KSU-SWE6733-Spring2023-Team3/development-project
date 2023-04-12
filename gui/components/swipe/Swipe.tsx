@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, StyleSheet, View, Text, Dimensions } from "react-native";
-import SwipeableCard from "../../components/swipe/SwipeableCard";
+import SwipeableCard from "./SwipeableCard";
 import SwipeCount from "./swipeCounts";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 

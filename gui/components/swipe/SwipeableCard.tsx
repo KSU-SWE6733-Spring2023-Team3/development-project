@@ -52,23 +52,25 @@ const SwipeableCard = ({
   lastSwipedItemId,
 }: any) => {
   const { data, loading, error } = useFetch(`/api/user/interest/${item.email}`);
-  const temdata = [
-    {
-      activity: "Activity",
-      attitude: "Attitude",
-      skillLevel: "SkillLevel",
-    },
-    {
-      activity: "Activity",
-      attitude: "Attitude",
-      skillLevel: "SkillLeve",
-    },
-    {
-      activity: "Activity",
-      attitude: "Attitude",
-      skillLevel: "SkillLevel",
-    },
-  ];
+
+  // TODO uncomment when not connected with backend 
+  // const temdata = [
+  //   {
+  //     activity: "Activity",
+  //     attitude: "Attitude",
+  //     skillLevel: "SkillLevel",
+  //   },
+  //   {
+  //     activity: "Activity",
+  //     attitude: "Attitude",
+  //     skillLevel: "SkillLeve",
+  //   },
+  //   {
+  //     activity: "Activity",
+  //     attitude: "Attitude",
+  //     skillLevel: "SkillLevel",
+  //   },
+  // ];
   const [xPosition, setXPosition] = useState(new Animated.Value(0));
   let swipeDirection = "";
   let cardOpacity = new Animated.Value(1);
@@ -168,10 +170,10 @@ const SwipeableCard = ({
       });
     }
   };
-  // TODO: remove comment when intergrating with backend.
-  // if (loading) {
-  //   return <Text>Loading...</Text>;
-  // }
+  // TODO: addd comment when not connected  with backend.
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   if (error) {
     return <Text>Error: some thing went wrong</Text>;
@@ -216,8 +218,7 @@ const SwipeableCard = ({
           </View>
         </View>
       </ImageBackground>
-      {/* TODO: Uncomment this if you want display the user interest in the card. */}
-      {/* <View
+      <View
         style={{
           flexDirection: "row",
           margin: 5,
@@ -225,8 +226,8 @@ const SwipeableCard = ({
         }}
       >
         <Text style={{ fontSize: 20 }}>Interests :</Text>
-        <InterestTable DATA={temdata} />
-      </View> */}
+        <InterestTable DATA={data} />
+      </View>
     </Animated.View>
   );
 };
