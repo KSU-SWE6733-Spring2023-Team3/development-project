@@ -5,17 +5,20 @@ import {StyleSheet, View, TextInput, Button, Text, AppConfig} from 'react-native
 
 import {postRequest} from "../../../util/ajax";
 import {useAuth} from "../../../context/auth";
+import React from 'react';
 
 // Login Page
 const Login = () => {
 
-    const {signIn} = useAuth();
+    const {signIn}:any = useAuth();
+    //const {signIn} = useAuth(); // previous
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [iserr, setIsErr] = useState(false);
 
 
     const handleLogin = async () => {
+        signIn(true)
         // Handle login functionality
         if (!email.includes("@") || email.length < 4 || password.length < 16) {
             setIsErr(true)
@@ -37,25 +40,25 @@ const Login = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <TextInput
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                style={styles.input}
-            />
-            <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                style={styles.input}
-            />
-            {iserr && <div>Credentials are not valid!</div>}
-            <Button title="Login" onPress={handleLogin}/>
-        </View>
+            <View style={styles.container}>
+                <TextInput
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    style={styles.input}
+                />
+                <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                    style={styles.input}
+                />
+                {iserr && <Text>Credentials are not valid!</Text>}
+                <Button title="Login" onPress={handleLogin}/>
+            </View>
     );
-};
+            };
 
 
 
