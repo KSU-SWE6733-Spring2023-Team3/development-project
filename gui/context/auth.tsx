@@ -13,11 +13,11 @@ function useProtectedRoute(user) {
     React.useEffect(() => {
         const inAuthGroup = segments[0] === "(auth)";
 
-        // if (!user && !inAuthGroup) {
-        //     router.replace('/home');
-        // } else if (user && inAuthGroup) {
-        //     router.replace('/');
-        // }
+        if (!user && !inAuthGroup) {
+            router.replace('/home');
+        } else if (user && inAuthGroup) {
+            router.replace('/');
+        }
     }, [user, segments]);
 }
 

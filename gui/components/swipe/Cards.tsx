@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, StyleSheet,Text } from "react-native";
 import Swipe from "./Swipe";
+import {getRequest} from "../../util/ajax";
 
 const Cards = () => {
-  const { data, loading, error } = useFetch(`/api/users/`);
+
+  let {users, setUsers} = useState([]);
+
+  getRequest(`api/user/`).then((response) => {
+    console.log(response);
+    if(response.hasOwnProperty('success')) {
+      setUsers(response.success);
+    }
+  });
+
+
+  /**
   // TODO : Uncomment this before connectinog with backend.
     if(loading){
       return <Text>Loading...</Text>
@@ -11,27 +23,8 @@ const Cards = () => {
     if(error){
       return <Text>Try Again. Some thing went wrong.</Text>
     }
-  // const DEMO_CONTENT = [
-  //   {
-  //     id: 0,
-  //     name: "Erica",
-  //     age: 28,
-  //     interests: ["Music", "Art", "Travel"],
-  //     email: "test@gmail.com",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1678875922894-7d3210b0787d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  //   },
-  //   {
-  //     id: 1,
-  //     name: "Jane",
-  //     age: 25,
-  //     interests: ["Hiking", "Food", "Reading"],
-  //     email: "won@gmail.com",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1678875922894-7d3210b0787d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  //   },
-  //   // add more users here...
-  // ];
+**/
+
   return (
     <SafeAreaView
       style={{
@@ -41,7 +34,7 @@ const Cards = () => {
         justifyContent: "center",
       }}
     >
-      <Swipe cards={data} />
+      <Swipe cards={users} />
     </SafeAreaView>
   );
 };
@@ -78,39 +71,12 @@ const styles = StyleSheet.create({
 });
 
 async function getUsersFromDb() {
-  /*
-    getRequest('api/users').then(response => {
+  getRequest('api/user').then(response => {
       if(response.data ) {
           return response.data
       } else {
         return [];
       }
   });
-  */
-  const DEMO_CONTENT = [
-    {
-      id: 0,
-      name: "Erica",
-      age: 28,
-      interests: ["Music", "Art", "Travel"],
-      email: "test@gmail.com",
-      imageUrl:
-        "https://images.unsplash.com/photo-1678875922894-7d3210b0787d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    },
-    {
-      id: 1,
-      name: "Jane",
-      age: 25,
-      interests: ["Hiking", "Food", "Reading"],
-      email: "won@gmail.com",
-      imageUrl:
-        "https://images.unsplash.com/photo-1678875922894-7d3210b0787d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    },
-    // add more users here...
-  ];
-  return DEMO_CONTENT;
-}
-function useFetch(arg0: string): { data: any; loading: any; error: any; } {
-  throw new Error("Function not implemented.");
 }
 
