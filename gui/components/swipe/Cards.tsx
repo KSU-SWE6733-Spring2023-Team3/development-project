@@ -9,21 +9,9 @@ const Cards = () => {
 
   getRequest(`api/user/`).then((response) => {
     console.log(response);
-    if(response.hasOwnProperty('success')) {
-      setUsers(response.success);
-    }
+    setUsers(response.data);
   });
 
-
-  /**
-  // TODO : Uncomment this before connectinog with backend.
-    if(loading){
-      return <Text>Loading...</Text>
-    }
-    if(error){
-      return <Text>Try Again. Some thing went wrong.</Text>
-    }
-**/
 
   return (
     <SafeAreaView
