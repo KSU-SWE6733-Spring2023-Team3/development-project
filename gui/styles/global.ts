@@ -5,6 +5,7 @@ const globalStyles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 32,
+        color:"#fff"
     },
     input: {
         width: '80%',
@@ -14,6 +15,20 @@ const globalStyles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 16,
         marginTop: 16,
+    },
+    text:{
+        color:'#fff',
+        fontSize:18
+    },
+    errorText:{
+      color:'#F44B4B'  
+    },
+    btn:{
+        paddingHorizontal:10,
+        paddingVertical:5,
+        backgroundColor:'#7700FF',
+        marginVertical:10,
+        borderRadius:5
     },
 })
 

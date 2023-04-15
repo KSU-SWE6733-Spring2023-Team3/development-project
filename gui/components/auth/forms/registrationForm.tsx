@@ -1,24 +1,26 @@
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import globalStyles from "../../../styles/global";
 import * as React from "react";
-import {useAuth} from "../../../context/auth";
+import { useAuth } from "../../../context/auth";
 import * as ImagePicker from "expo-image-picker";
-import {postRequest} from "../../../util/ajax";
-import {z} from "zod";
-import {useState} from "react";
+import { postRequest } from "../../../util/ajax";
+import { z } from "zod";
+import { useState } from "react";
+import { useRouter } from "expo-router";
 
 
 
 const registrationSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
     email: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(16, { message: "Password must be at least 16 characters" }),
+    password: z.string().min(8, { message: "Password must be at least 16 characters" }),
     profilePicture: z.any()
 });
 
 type RegistrationFormData = z.infer<typeof registrationSchema>
 
 export default function RegistrationForm() {
+    const router = useRouter()
 
     const [formData, setFormData] = useState<RegistrationFormData>({
         name: '',
@@ -27,7 +29,7 @@ export default function RegistrationForm() {
         profilePicture: '',
     });
 
-    const {signIn} = useAuth();
+    const { signIn } = useAuth();
 
 
 
@@ -49,24 +51,25 @@ export default function RegistrationForm() {
 
 
         if (!result.canceled) {
-            setFormData({...formData, profilePicture: result.assets[0].uri});
+            setFormData({ ...formData, profilePicture: result.assets[0].uri });
         }
     };
 
     const handleNameChange = (text: string) => {
 
-        setFormData({...formData, name: text});
+        setFormData({ ...formData, name: text });
     };
 
     const handleEmailChange = (text: string) => {
-        setFormData({...formData, email: text});
+        setFormData({ ...formData, email: text });
     };
 
     const handlePasswordChange = (text: string) => {
-        setFormData({...formData, password: text});
+        setFormData({ ...formData, password: text });
     };
 
     const handleSubmit = async () => {
+        router.push('/additionalinfo')
         const validationResult = registrationSchema.safeParse(formData);
 
         if (!validationResult.success) {
@@ -86,7 +89,7 @@ export default function RegistrationForm() {
 
         // Perform registration logic with formData
         postRequest('api/user', uploadData).then(response => {
-            if(response.statusText == "OK" ) {
+            if (response.statusText == "OK") {
                 signIn(true);
             } else {
                 signIn(false);
@@ -103,41 +106,41 @@ export default function RegistrationForm() {
                     <Image style={styles.profilePicture} source={{ uri: formData.profilePicture.uri }} />
                 ) : (
                     <View style={styles.profilePicturePlaceholder}>
-                        <Text style={styles.profilePicturePlaceholderText}>Upload Profile Picture</Text>
+                        <Text style={{...styles.profilePicturePlaceholderText, ...styles.text}}>Upload Profile Picture</Text>
                     </View>
                 )}
-                <Text style={styles.profilePictureButtonText}>Choose Photo</Text>
+                <Text style={{...styles.profilePictureButtonText, ...styles.text}}>Choose Photo</Text>
             </TouchableOpacity>
             <TextInput
                 style={globalStyles.input}
-                placeholderTextColor="#000000"
+                placeholderTextColor="#fff"
                 placeholder="Name"
                 onChangeText={handleNameChange}
                 value={formData.name}
             />
-            {errors['name'] && <Text style={styles.errorText}>{errors['name']}</Text>}
+            {errors['name'] && <Text style={globalStyles.errorText}>{errors['name']}</Text>}
             <TextInput
                 style={globalStyles.input}
-                placeholderTextColor="#000000"
+                placeholderTextColor="#fff"
                 placeholder="Email"
                 onChangeText={handleEmailChange}
                 value={formData.email}
                 keyboardType="email-address"
                 autoCapitalize="none"
             />
-            {errors['email'] && <Text style={styles.errorText}>{errors['email']}</Text>}
+            {errors['email'] && <Text style={globalStyles.errorText}>{errors['email']}</Text>}
             <TextInput
                 style={globalStyles.input}
-                placeholderTextColor="#000000"
+                placeholderTextColor="#fff"
                 secureTextEntry={true}
                 placeholder="Password"
                 onChangeText={handlePasswordChange}
-                // value={formData.password}
+            // value={formData.password}
             />
-            {errors['password'] && <Text style={styles.errorText}>{errors['password']}</Text>}
-            <TouchableOpacity style={globalStyles.button} onPress={handleSubmit}>
+            {errors['password'] && <Text style={globalStyles.errorText}>{errors['password']}</Text>}
+            <TouchableOpacity style={globalStyles.btn} onPress={handleSubmit}>
 
-                <Text style={styles.buttonText}>Register</Text>
+                <Text style={globalStyles.text}>Register</Text>
             </TouchableOpacity>
         </>
     )
@@ -145,9 +148,12 @@ export default function RegistrationForm() {
 
 const styles = StyleSheet.create({
     container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-},
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text:{
+        color:'#fff'
+    }
 
 });

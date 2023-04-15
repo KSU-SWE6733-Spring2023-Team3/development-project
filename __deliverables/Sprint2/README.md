@@ -14,7 +14,7 @@ The new requirement for Sprint 2 was to implement Continuous Integration. Approp
 ## Sprint Burndown Chart
 
 ## Scrum
-
+https://kennesawedu.sharepoint.com/:v:/r/sites/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/Shared%20Documents/General/Recordings/Meeting%20in%20_General_-20230411_200645-Meeting%20Recording.mp4?csf=1&web=1
 
 
 ## Pair programming
@@ -23,8 +23,8 @@ The new requirement for Sprint 2 was to implement Continuous Integration. Approp
 
 ## Test-first
 
-Unit tests can be found in the [API tests directory](api/tests/Feature/RegistrationTest.php). To run the unit tests, follow the instructions in the [API README](api/README.md) to create a new API instance. By default, database connection is not allowed, so contact the team to gain access. Alternatively, you can set up a Neo4j database locally and connect the API to it.
-
+Unit tests can be found in the [API tests directory](api/tests/Feature/). To run the unit tests, follow the instructions in the [API README](api/README.md) to create a new API instance. By default, database connection is not allowed, so contact the team to gain access. Alternatively, you can set up a Neo4j database locally and connect the API to it.
+An example of this running in Sprint 2 can be found in [unit_tests_sprint_2.png](unit_tests_sprint_2.png).
 
 
 Behavior driven tests can be found in the [tests](../../tests) directory.

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-use NeoEloquent;
+
+use Vinelab\NeoEloquent\Eloquent\Model as NeoEloquent;
+
 
 class User extends NeoEloquent implements Authenticatable
 {
@@ -25,6 +27,7 @@ class User extends NeoEloquent implements Authenticatable
         'email',
         'password',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -56,6 +59,11 @@ class User extends NeoEloquent implements Authenticatable
         return $this->hasOne(Photo::class, 'IS_PROFILE_PHOTO');
     }
 
+
+    public function interests()
+    {
+        return $this->hasMany(UserInterest::class, 'HAS_INTEREST');
+    }
 
 
 }
