@@ -18,7 +18,6 @@ const Login = () => {
 
 
     const handleLogin = async () => {
-        signIn(true)
         // Handle login functionality
         if (!email.includes("@") || email.length < 4 || password.length < 16) {
             setIsErr(true)

@@ -20,7 +20,7 @@ const registrationSchema = z.object({
 type RegistrationFormData = z.infer<typeof registrationSchema>
 
 export default function RegistrationForm() {
-    const router = useRouter()
+    const router = useRouter();
 
     const [formData, setFormData] = useState<RegistrationFormData>({
         name: '',
