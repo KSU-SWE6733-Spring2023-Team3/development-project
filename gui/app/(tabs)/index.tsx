@@ -1,5 +1,4 @@
 import React from "react";
-import { SafeAreaView } from "react-native";
 import Cards from "../../components/swipe/Cards";
 
 const Index = () => {

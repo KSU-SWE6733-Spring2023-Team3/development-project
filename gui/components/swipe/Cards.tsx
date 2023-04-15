@@ -5,12 +5,26 @@ import {getRequest} from "../../util/ajax";
 
 const Cards = () => {
 
-  let {users, setUsers} = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  getRequest(`api/user/`).then((response) => {
-    console.log(response);
-    setUsers(response.data);
-  });
+  useEffect(() => {
+    getRequest(`api/user/`).then((response) => {
+      console.log(response);
+      setUsers(response.data);
+      setLoading(false);
+    });
+
+  }, []);
+
+
+  if(loading) {
+    return (
+        <>
+          Loading!
+        </>
+    )
+  }
 
 
   return (
@@ -57,14 +71,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-async function getUsersFromDb() {
-  getRequest('api/user').then(response => {
-      if(response.data ) {
-          return response.data
-      } else {
-        return [];
-      }
-  });
-}
 
