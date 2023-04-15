@@ -37,9 +37,6 @@ const Swipe = ({ cards }) => {
     setSwipeDirection(swipeDirection);
   };
 
-  console.log("sample cards");
-  console.log(sampleCardArray);
-
   return (
     <>
       <View style={styles.container}>
