@@ -3,9 +3,17 @@
 
 ## Story point forecast
 
+Following the [Yesterday's Weather](https://www.scruminc.com/yesterdays-weather/) concept, the team estimates we can complete **22** points in this sprint. 
 
+This point value is based on our progress during [Sprint 1](../Sprint1), but takes into account the increased workload of team members other classes.
 
-The team estimates we can complete **N** points in this sprint. This point value is based on our progress during [Sprint 1](../Sprint1), but takes into account the increased workload of team members other classes.
+Last sprint, we completed 28 points. 
+
+Due to increased workload in other classes and personal availability due to real-world circumstances, we estimated we would be able to complete 80% of the work we did last sprint.
+
+28 points * .80  = 22.4, rounded down to **22** points. 
+
+We expect this number will become more accurate over time, as we have more Sprints to narrow down our velocity.
 
 ## Continuous Integration
 
