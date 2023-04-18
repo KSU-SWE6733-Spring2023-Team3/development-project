@@ -14,8 +14,8 @@ export default function LoginLayout() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-    },
+    // container: {
+    //     flex: 1,
+    //     alignItems: 'center',
+    // },
 });

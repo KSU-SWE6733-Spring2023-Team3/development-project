@@ -5,6 +5,7 @@ import {StyleSheet, View, TextInput, Button, Text, AppConfig} from 'react-native
 
 import {postRequest} from "../../../util/ajax";
 import {useAuth} from "../../../context/auth";
+import globalStyles from '../../../styles/global';
 
 // Login Page
 const Login = () => {
@@ -42,17 +43,20 @@ const Login = () => {
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
-                style={styles.input}
+                style={globalStyles.input}
             />
             <TextInput
                 placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
-                style={styles.input}
+                style={globalStyles.input}
             />
             {iserr && <div>Credentials are not valid!</div>}
+            <View style={{marginTop:10}}>
+
             <Button title="Login" onPress={handleLogin}/>
+            </View>
         </View>
     );
 };
@@ -66,14 +70,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  input: {
-    width: '80%',
-    height: 40,
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    borderColor: 'green',
-    borderWidth: 2,
-  },
+//   input: {
+//     width: '80%',
+//     height: 40,
+//     marginVertical: 10,
+//     paddingHorizontal: 10,
+//     borderColor: 'green',
+//     borderWidth: 2,
+//   },
   toggleText: {
     marginTop: 20,
     textDecorationLine: 'underline',

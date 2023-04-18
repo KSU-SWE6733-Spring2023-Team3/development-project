@@ -1,5 +1,4 @@
 import {Stack} from 'expo-router';
-import {View} from "../../components/Themed";
 import * as React from "react";
 
 export default function Layout() {
