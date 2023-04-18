@@ -29,8 +29,9 @@ can be viewed as long as you are logged in with your KSU account.
 
 ## Pair programming
 
-Pair programming was done throughout various sessions, although
+Pair programming was done throughout various sessions. One example of such can be seen designing the matching algorithm. 
 
+[The Pair Programming Session](https://kennesawedu-my.sharepoint.com/:v:/g/personal/cneighb3_students_kennesaw_edu/ERQfaCaUEahJhKWvjdxrrmIBM5_mRclltf--W1vw7IXOcg?email=eallmann%40students.kennesaw.edu) was shared by direct access. If you have trouble viewing, please let us know and we will send a link directly.
 
 ## Test-first
 
