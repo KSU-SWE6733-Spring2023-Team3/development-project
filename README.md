@@ -61,7 +61,7 @@ This project uses the [Neo4J](https://neo4j.com/) graph database for storage. Us
 
 ### API
 
-We are going to generate an API using [Laravel 10](https://laravel.com/). This API is what will be the system that performs database operations and provides all functionality for the frontend.
+We are going to generate an API using [Laravel 8](https://laravel.com/). This API is what will be the system that performs database operations and provides all functionality for the frontend.
 
 ### GUI
 
