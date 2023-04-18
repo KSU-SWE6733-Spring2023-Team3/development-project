@@ -9,16 +9,19 @@ The team estimates we can complete **N** points in this sprint. This point value
 
 ## Continuous Integration
 
-The new requirement for Sprint 2 was to implement Continuous Integration. Appropriate configuration files can be found in the [ci](../../ci) directory. The review of CI tools we did can be found in [ci_tool_review.md](ci_tool_review.md).
+The new requirement for Sprint 2 was to implement Continuous Integration. Appropriate configuration files can be found in the [.github](../../.github) directory. The review of CI tools we did can be found in [ci_tool_review.md](ci_tool_review.md).
 
 ## Sprint Burndown Chart
 
 ## Scrum
-https://kennesawedu.sharepoint.com/:v:/r/sites/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/Shared%20Documents/General/Recordings/Meeting%20in%20_General_-20230411_200645-Meeting%20Recording.mp4?csf=1&web=1
+
+Scrums were conducted during this sprint. A [recording of one of these SCRUMs](https://kennesawedu.sharepoint.com/:v:/r/sites/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/Shared%20Documents/General/Recordings/Meeting%20in%20_General_-20230411_200645-Meeting%20Recording.mp4?csf=1&web=1)
+can be viewed as long as you are logged in with your KSU account.
 
 
 ## Pair programming
 
+Pair programming was done throughout various sessions, although
 
 
 ## Test-first
@@ -27,7 +30,7 @@ Unit tests can be found in the [API tests directory](api/tests/Feature/). To run
 An example of this running in Sprint 2 can be found in [unit_tests_sprint_2.png](unit_tests_sprint_2.png).
 
 
-Behavior driven tests can be found in the [tests](../../tests) directory.
+Behavior driven tests can be found in the [tests](../../tests) directory. There are several new and improved tests since the last sprint.
 
 ## Sprint Review
 
