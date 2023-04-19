@@ -90,11 +90,7 @@ export default function RegistrationForm() {
             if(response.data.hasOwnProperty('success')) {
                 if(response.data.success == "User created successfully!") {
                     signIn({name: formData.name});
-                } else {
-                    signIn(false);
                 }
-            } else {
-                signIn(false);
             }
         });
 
