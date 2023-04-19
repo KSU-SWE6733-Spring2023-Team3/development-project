@@ -160,7 +160,6 @@ const SwipeableCard = ({
 
   useEffect(() => {
     getRequest('api/user/interest/' + item.email).then((response) => {
-      console.log(response);
       if(response.hasOwnProperty('data')) {
         const responseData = response.data;
         if(responseData.hasOwnProperty("success")) {

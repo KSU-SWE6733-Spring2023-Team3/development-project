@@ -168,6 +168,7 @@ class UserController extends Controller
             }
         }
 
+        $request->session()->regenerate();
         return response()->json(['success' => self::USER_CREATED_SUCCESS_MSG], 200);
 
     } // END store()

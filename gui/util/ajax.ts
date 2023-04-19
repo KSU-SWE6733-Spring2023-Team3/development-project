@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const BASE_URL = "http://localhost:8000/";
 
-const postRequest = async function post(url: string, data: FormData) {
+const postRequest = async function post(url: string, data) {
     return await axios.get(BASE_URL + 'sanctum/csrf-cookie', {
         withCredentials: true
     }).then(response => {

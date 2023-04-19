@@ -1,5 +1,7 @@
 import * as React from "react";
 import {useRouter, useSegments} from 'expo-router';
+
+
 const AppContext = React.createContext(null);
 
 export function useAuth() {
@@ -13,10 +15,15 @@ function useProtectedRoute(user) {
     React.useEffect(() => {
         const inAuthGroup = segments[0] === "(auth)";
 
+
         if (!user && !inAuthGroup) {
             router.replace('/home');
         } else if (user && inAuthGroup) {
-            router.replace('/');
+            if(segments[1] == 'register') {
+                router.replace("/additionalinfo");
+            } else {
+                router.replace('/');
+            }
         }
     }, [user, segments]);
 }

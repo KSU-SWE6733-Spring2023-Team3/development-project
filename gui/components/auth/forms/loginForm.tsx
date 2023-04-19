@@ -1,7 +1,7 @@
 // Login and SignUp page 
 
 import {useContext, useState} from 'react';
-import {StyleSheet, View, TextInput, Button, Text, AppConfig} from 'react-native';
+import {StyleSheet, View, TextInput, Button, Text} from 'react-native';
 
 import {postRequest} from "../../../util/ajax";
 import {useAuth} from "../../../context/auth";
@@ -39,9 +39,26 @@ const Login = () => {
     };
 
     return (
-
+        <View style={styles.container}>
+            <TextInput
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                style={styles.input}
+            />
+            {iserr && <Text>Credentials are not valid!</Text>}
+            <Button title="Login" onPress={handleLogin}/>
+        </View>
     );
-            };
+
+};
 
 
 
@@ -52,14 +69,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-//   input: {
-//     width: '80%',
-//     height: 40,
-//     marginVertical: 10,
-//     paddingHorizontal: 10,
-//     borderColor: 'green',
-//     borderWidth: 2,
-//   },
+   input: {
+     width: '80%',
+     height: 40,
+     marginVertical: 10,
+     paddingHorizontal: 10,
+     borderColor: 'green',
+     borderWidth: 2,
+   },
   toggleText: {
     marginTop: 20,
     textDecorationLine: 'underline',

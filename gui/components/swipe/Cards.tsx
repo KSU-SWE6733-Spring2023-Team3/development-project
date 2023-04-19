@@ -10,12 +10,11 @@ const Cards = () => {
 
   useEffect(() => {
     getRequest(`api/user/`).then((response) => {
-      console.log(response);
       setUsers(response.data);
       setLoading(false);
     });
 
-  }, []);
+  }, [loading]);
 
 
   if(loading) {

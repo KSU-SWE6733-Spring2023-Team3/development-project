@@ -6,7 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import { postRequest } from "../../../util/ajax";
 import { z } from "zod";
 import { useState } from "react";
-import { useRouter } from "expo-router";
+import {Redirect, useRouter } from "expo-router";
 
 
 
@@ -30,8 +30,6 @@ export default function RegistrationForm() {
     });
 
     const { signIn } = useAuth();
-
-
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -69,7 +67,7 @@ export default function RegistrationForm() {
     };
 
     const handleSubmit = async () => {
-        router.push('/additionalinfo')
+
         const validationResult = registrationSchema.safeParse(formData);
 
         if (!validationResult.success) {
@@ -89,12 +87,16 @@ export default function RegistrationForm() {
 
         // Perform registration logic with formData
         postRequest('api/user', uploadData).then(response => {
-            if (response.statusText == "OK") {
-                signIn(true);
+            if(response.data.hasOwnProperty('success')) {
+                if(response.data.success == "User created successfully!") {
+                    signIn({name: formData.name});
+                } else {
+                    signIn(false);
+                }
             } else {
                 signIn(false);
             }
-        })
+        });
 
     };
 
