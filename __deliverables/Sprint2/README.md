@@ -43,6 +43,11 @@ Behavior driven tests can be found in the [tests](../../tests) directory. There 
 
 ## Sprint Review
 
+On 2023-04-18, our team conducted a Sprint Review session. Unfortunately, there was a mixup with the recording and we were not able to capture the Review session.
+
+The [screenshot](2023-04-18_Sprint_Review_Stories.png) of the stories reviewed has been uploaded to the repository.
+
+Immediately after realizing, we took a screenshot of the meeting attendees and date-time. The fact that the review was conducted is evident in our [Sprint Burndown Chart](#sprint-burndown-chart). 
 
 
 ## Project Demo
