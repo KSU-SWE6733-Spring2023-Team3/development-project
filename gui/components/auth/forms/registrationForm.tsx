@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import globalStyles from "../../../styles/global";
 import * as React from "react";
 import { useAuth } from "../../../context/auth";
@@ -13,7 +13,7 @@ import { useRouter } from "expo-router";
 const registrationSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
     email: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 16 characters" }),
+    password: z.string().min(16, { message: "Password must be at least 16 characters" }),
     profilePicture: z.any()
 });
 
@@ -101,19 +101,23 @@ export default function RegistrationForm() {
     return (
         <>
             <Text style={globalStyles.title}>Registration</Text>
-            <TouchableOpacity style={styles.profilePictureContainer} onPress={handleChoosePhoto}>
+            <TouchableOpacity style={formData.profilePicture ? 
+            { width: 150, height: 150, backgroundColor: 'gray', borderRadius: 75, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', zIndex: 0 }:
+            { width: 150, height: 150, borderRadius: 75, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', zIndex: 0 }
+        
+        } onPress={handleChoosePhoto}>
                 {formData.profilePicture ? (
-                    <Image style={styles.profilePicture} source={{ uri: formData.profilePicture.uri }} />
+                    <Image style={{ zIndex: 1, width: '100%', height: '100%', resizeMode: 'contain', marginBottom: -25 }} source={{ uri: formData.profilePicture }} />
                 ) : (
                     <View style={styles.profilePicturePlaceholder}>
-                        <Text style={{...styles.profilePicturePlaceholderText, ...styles.text}}>Upload Profile Picture</Text>
+                        <Text style={{ ...styles.text }}>Upload Profile Picture</Text>
                     </View>
                 )}
-                <Text style={{...styles.profilePictureButtonText, ...styles.text}}>Choose Photo</Text>
+                <Text style={{ marginTop: 10 }}>Choose Photo</Text>
             </TouchableOpacity>
             <TextInput
                 style={globalStyles.input}
-                placeholderTextColor="#fff"
+                placeholderTextColor="#000"
                 placeholder="Name"
                 onChangeText={handleNameChange}
                 value={formData.name}
@@ -121,7 +125,7 @@ export default function RegistrationForm() {
             {errors['name'] && <Text style={globalStyles.errorText}>{errors['name']}</Text>}
             <TextInput
                 style={globalStyles.input}
-                placeholderTextColor="#fff"
+                placeholderTextColor="#000"
                 placeholder="Email"
                 onChangeText={handleEmailChange}
                 value={formData.email}
@@ -131,17 +135,20 @@ export default function RegistrationForm() {
             {errors['email'] && <Text style={globalStyles.errorText}>{errors['email']}</Text>}
             <TextInput
                 style={globalStyles.input}
-                placeholderTextColor="#fff"
+                placeholderTextColor="#000"
                 secureTextEntry={true}
                 placeholder="Password"
                 onChangeText={handlePasswordChange}
             // value={formData.password}
             />
             {errors['password'] && <Text style={globalStyles.errorText}>{errors['password']}</Text>}
-            <TouchableOpacity style={globalStyles.btn} onPress={handleSubmit}>
+            <View style={{ marginTop: 10 }}>
+                <Button title="Register" onPress={handleSubmit} />
+            </View>
+            {/* <TouchableOpacity style={globalStyles.btn} onPress={handleSubmit}>
 
                 <Text style={globalStyles.text}>Register</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </>
     )
 }
@@ -152,8 +159,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    text:{
-        color:'#fff'
+    text: {
+        color: '#fff'
     }
 
 });

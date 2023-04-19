@@ -11,7 +11,8 @@ export default function LoginLayout() {
         >
             <View style={styles.body}>
 
-                <Text style={globalStyles.text}> Welcome to KSU SWE 6733 Spring 2023 Group 3 Development Project! </Text>
+                {/* <Text style={globalStyles.text}> Welcome to KSU SWE 6733 Spring 2023 Group 3 Development Project! </Text> */}
+                <Text style={globalStyles.text}> Join a community of adventurous singles and start your journey to love! </Text>
                 <Link style={{...globalStyles.text, ...globalStyles.btn}} href="/(auth)/login">Login!</Link>
                 <Link style={{...globalStyles.text, ...globalStyles.btn}} href="/(auth)/register">Sign Up!</Link>
             </View>
