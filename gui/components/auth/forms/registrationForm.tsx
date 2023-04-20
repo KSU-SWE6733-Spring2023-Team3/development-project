@@ -6,7 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import { postRequest } from "../../../util/ajax";
 import { z } from "zod";
 import { useState } from "react";
-import { useRouter } from "expo-router";
+import {Redirect, useRouter } from "expo-router";
 
 
 
@@ -20,7 +20,7 @@ const registrationSchema = z.object({
 type RegistrationFormData = z.infer<typeof registrationSchema>
 
 export default function RegistrationForm() {
-    const router = useRouter()
+    const router = useRouter();
 
     const [formData, setFormData] = useState<RegistrationFormData>({
         name: '',
@@ -30,8 +30,6 @@ export default function RegistrationForm() {
     });
 
     const { signIn } = useAuth();
-
-
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -69,7 +67,7 @@ export default function RegistrationForm() {
     };
 
     const handleSubmit = async () => {
-        router.push('/additionalinfo')
+
         const validationResult = registrationSchema.safeParse(formData);
 
         if (!validationResult.success) {
@@ -89,12 +87,10 @@ export default function RegistrationForm() {
 
         // Perform registration logic with formData
         postRequest('api/user', uploadData).then(response => {
-            if (response.statusText == "OK") {
-                signIn(true);
-            } else {
-                signIn(false);
+            if(response.data) {
+                signIn({name: formData.name});
             }
-        })
+        });
 
     };
 
@@ -158,6 +154,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'white',
     },
     text: {
         color: '#fff'

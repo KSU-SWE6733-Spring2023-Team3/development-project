@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { TextInput, StyleSheet, TouchableWithoutFeedback, Picker,Button } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Text, View } from "../Themed";
 import globalStyles from "../../styles/global";
+import {getRequest, postRequest} from "../../util/ajax";
+import {useRouter} from 'expo-router';
+import {useAuth} from "../../context/auth";
 
 const interestsInit = [
 	{ value: "hiking", label: "Hiking" },
@@ -52,8 +55,15 @@ const experienceInit = [
 
 export default function PostRegistration() {
 	const [sexDrop, setSexDrop] = useState(false);
-	const [interestsDrop, setinterestsDrop] = useState(false);
+	const [interestsDrop, setInterestsDrop] = useState(false);
 	const [desireDrop, setDesireDrop] = useState(false);
+	const [skillDrop, setSkillDrop] = useState(false);
+
+
+	const [activityOptions, setActivityOptions] = useState([]);
+	const [attitudeOptions, setAttitudeOptions] = useState([]);
+	const [skillLvlOptions, setSkillLvlOptions] = useState([]);
+
 
 	const [sex, setSex] = useState(null);
 	const [interests, setInterests] = useState(null);
@@ -74,15 +84,76 @@ export default function PostRegistration() {
 		setInterestsDegree([...arr]);
 	};
 
+
+
+
+	useEffect(() => {
+		getRequest('api/activity').then(response => {
+			if(response.data.hasOwnProperty('success')) {
+
+				const activityArr = response.data.success;
+				let formattedActivities = [];
+				activityArr.map((activity) => {
+					formattedActivities.push({
+						label: activity,
+						value: activity,
+					});
+				});
+
+				setActivityOptions(formattedActivities);
+			}
+		});
+
+		getRequest('api/attitude').then(response => {
+			if(response.data.hasOwnProperty('success')) {
+				const attitudeArr = response.data.success;
+				let formattedAttitudes = [];
+				attitudeArr.map((attitude) => {
+					formattedAttitudes.push({
+						label: attitude,
+						value: attitude
+					});
+				});
+
+				setAttitudeOptions(formattedAttitudes);
+			}
+		});
+
+		getRequest('api/skillLevel').then(response => {
+			if(response.data.hasOwnProperty('success')) {
+				const skillArr = response.data.success;
+				let formattedSkills = [];
+				skillArr.map((skill) => {
+					formattedSkills.push({
+						label: skill,
+						value: skill,
+					});
+				});
+
+				setSkillLvlOptions(formattedSkills);
+			}
+		});
+	}, []);
+
+	const router = useRouter();
+
 	const handleSubmit = () => {
-		const data = {
-			interests: interestsDegree,
-			sex,
-			age,
-			zip,
-			desire,
-		};
-	
+		const formattedInterests = [];
+
+		for(const activity in interestsDegree) {
+			formattedInterests.push({
+				'activity': activity,
+				'attitude': interestsDegree[activity].attitude,
+				'skillLevel': interestsDegree[activity].skillLevel,
+			});
+		}
+
+		postRequest('api/user/interest', {'interests': formattedInterests}).then(response => {
+			if(response.data.hasOwnProperty('success')) {
+				router.replace('/');
+			}
+		});
+
 	};
 
 	
@@ -101,8 +172,8 @@ export default function PostRegistration() {
 					<DropDownPicker
 						open={interestsDrop}
 						value={interests}
-						items={interestsInit}
-						setOpen={setinterestsDrop}
+						items={activityOptions}
+						setOpen={setInterestsDrop}
 						setValue={setInterests}
 						placeholder="Select Interests"
 						multiple
@@ -132,7 +203,7 @@ export default function PostRegistration() {
 										fontSize: 14,
 									}}
 								>
-									How often do you go?
+									How interested in this activity are you?
 								</Text>
 								<Picker
 									style={styles.picker}
@@ -140,11 +211,11 @@ export default function PostRegistration() {
 									onValueChange={(itemValue, itemIndex) => {
 										setInterestsDegree((prev) => ({
 											...prev,
-											[item]: { ...prev[item], often: itemValue },
+											[item]: { ...prev[item], attitude: itemValue },
 										}));
 									}}
 								>
-									{oftenInit.map((option, index) => (
+									{attitudeOptions.map((option, index) => (
 										<Picker.Item
 											key={index}
 											label={option.label}
@@ -168,11 +239,11 @@ export default function PostRegistration() {
 									onValueChange={(itemValue, itemIndex) => {
 										setInterestsDegree((prev) => ({
 											...prev,
-											[item]: { ...prev[item], experience: itemValue },
+											[item]: { ...prev[item], skillLevel: itemValue },
 										}));
 									}}
 								>
-									{experienceInit.map((option, index) => (
+									{skillLvlOptions.map((option, index) => (
 										<Picker.Item
 											key={index}
 											label={option.label}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -168,6 +169,16 @@ class UserController extends Controller
             }
         }
 
+        $credentials = [
+            'email' => $email,
+            'password' => $password
+        ];
+
+        if(Auth::attempt($credentials))
+        {
+            $request->session()->regenerate();
+            return response('Login success', 200);
+        }
         return response()->json(['success' => self::USER_CREATED_SUCCESS_MSG], 200);
 
     } // END store()
