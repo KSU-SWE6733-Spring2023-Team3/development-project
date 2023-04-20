@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 const BASE_URL = "http://localhost:8000/";
+//const BASE_URL = "http://35.202.95.163:8080/";
 
 const postRequest = async function post(url: string, data) {
     return await axios.get(BASE_URL + 'sanctum/csrf-cookie', {

@@ -84,7 +84,7 @@ export default function PostRegistration() {
 		setInterestsDegree([...arr]);
 	};
 
-	const {user} = useAuth();
+
 
 
 	useEffect(() => {
@@ -133,7 +133,7 @@ export default function PostRegistration() {
 				setSkillLvlOptions(formattedSkills);
 			}
 		});
-	}, [user]);
+	}, []);
 
 	const router = useRouter();
 
