@@ -87,10 +87,8 @@ export default function RegistrationForm() {
 
         // Perform registration logic with formData
         postRequest('api/user', uploadData).then(response => {
-            if(response.data.hasOwnProperty('success')) {
-                if(response.data.success == "User created successfully!") {
-                    signIn({name: formData.name});
-                }
+            if(response.data) {
+                signIn({name: formData.name});
             }
         });
 
