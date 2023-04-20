@@ -17,11 +17,11 @@ Route::controller(\App\Http\Controllers\LoginController::class)->group(function(
    Route::post('/login', 'authenticate')->name('login');
 });
 
-Route::controller(\App\Http\Controllers\UserInterestController::class)->group(function() {
-    Route::get('/activity', 'activities');
-    Route::get('/attitude', 'attitudes');
-    Route::get('/skillLevel', 'skillLevels');
-});
+//Route::controller(\App\Http\Controllers\UserInterestController::class)->group(function() {
+//    Route::get('/activity', 'activities');
+//    Route::get('/attitude', 'attitudes');
+//    Route::get('/skillLevel', 'skillLevels');
+//});
 
 
 Route::controller(\App\Http\Controllers\UserController::class)->group(function() {
@@ -41,6 +41,9 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/user/interest', 'store');
         Route::get('/user/interest', 'list');
         Route::get('/user/interest/{email}', 'show');
+        Route::get('/activity', 'activities');
+        Route::get('/attitude', 'attitudes');
+        Route::get('/skillLevel', 'skillLevels');
     });
 });
 

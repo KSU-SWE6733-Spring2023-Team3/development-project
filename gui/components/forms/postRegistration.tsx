@@ -5,6 +5,7 @@ import { Text, View } from "../Themed";
 import globalStyles from "../../styles/global";
 import {getRequest, postRequest} from "../../util/ajax";
 import {useRouter} from 'expo-router';
+import {useAuth} from "../../context/auth";
 
 const interestsInit = [
 	{ value: "hiking", label: "Hiking" },
@@ -83,7 +84,7 @@ export default function PostRegistration() {
 		setInterestsDegree([...arr]);
 	};
 
-
+	const {user} = useAuth();
 
 
 	useEffect(() => {
@@ -132,7 +133,7 @@ export default function PostRegistration() {
 				setSkillLvlOptions(formattedSkills);
 			}
 		});
-	}, []);
+	}, [user]);
 
 	const router = useRouter();
 
