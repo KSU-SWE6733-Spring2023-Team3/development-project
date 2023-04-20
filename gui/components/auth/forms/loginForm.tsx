@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+      backgroundColor: 'white',
   },
    input: {
      width: '80%',
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
      paddingHorizontal: 10,
      borderColor: 'green',
      borderWidth: 2,
+
    },
   toggleText: {
     marginTop: 20,

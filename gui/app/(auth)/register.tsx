@@ -27,11 +27,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'white',
     },
     body:{
         width:'100%',
         height:'100%',
         // backgroundColor:'rgba(52, 52, 52, 0.8)',
+        backgroundColor: 'white',
         justifyContent:'center',
         alignItems:'center'
     },
