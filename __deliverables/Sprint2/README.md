@@ -21,6 +21,10 @@ The new requirement for Sprint 2 was to implement Continuous Integration. Approp
 
 ## Sprint Burndown Chart
 
+Our Burndown Chart for this sprint can be found at [sprint_2_burndown_chart.png](sprint_2_burndown_chart.png). We estimated we could complete 22 points this Sprint. 
+
+Our planning left us a sprint with 21 points in it, so we pulled in an extra 5-point story we anticipated would roll into the next sprint, and this is exactly what ended up happening.
+
 ## Scrum
 
 Scrums were conducted during this sprint. A [recording of one of these SCRUMs](https://kennesawedu.sharepoint.com/:v:/r/sites/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/Shared%20Documents/General/Recordings/Meeting%20in%20_General_-20230411_200645-Meeting%20Recording.mp4?csf=1&web=1)
