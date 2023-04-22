@@ -11,7 +11,6 @@ export default function SignOut() {
 
 
         getRequest('api/logout').then( response => {
-                console.log(response);
                 signOut();
             }
         );

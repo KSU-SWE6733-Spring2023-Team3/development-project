@@ -5,6 +5,8 @@ import SwipeCount from "./swipeCounts";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const Swipe = ({ cards }) => {
+
+
   const [noMoreCard, setNoMoreCard] = useState(false);
   const [sampleCardArray, setSampleCardArray] = useState(cards);
   const [swipeDirection, setSwipeDirection] = useState("--");
