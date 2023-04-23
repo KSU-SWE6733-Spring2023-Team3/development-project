@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
 
 
             $userZip = Faker\Provider\Address::postcode();
-            
+
             $zipNode = ZipCode::firstOrCreate(['value' => '"' . $userZip . '"']);
 
             $user->zipCode()->save($zipNode);
@@ -85,7 +85,8 @@ class DatabaseSeeder extends Seeder
             $userGender = $faker->randomElement($genders);
             $user->identifiesAs()->save($userGender);
 
-            $userPreferences = $faker->randomElements($genders);
+            $preferenceCount = $faker->randomNumber(1,3);
+            $userPreferences = $faker->randomElements($genders, $preferenceCount);
             foreach($userPreferences as $preference)
             {
                 $user->preference()->save($preference);
