@@ -66,4 +66,30 @@ class User extends NeoEloquent implements Authenticatable
     }
 
 
+    public function identifiesAs()
+    {
+        return $this->hasOne(Gender::class, 'IDENTIFIES_AS');
+    }
+
+    public function preference()
+    {
+        return $this->hasMany(Gender::class, 'HAS_PREFERENCE');
+    }
+
+    public function zipCode()
+    {
+        return $this->hasOne(ZipCode::class, 'IN_ZIPCODE');
+    }
+
+    public function age()
+    {
+        return $this->hasOne(Age::class, 'IS_AGE');
+    }
+
+    public function ageRange()
+    {
+        return $this->hasMany(Age::class, 'IN_AGE_RANGE_PREFERENCE');
+    }
+
+
 }
