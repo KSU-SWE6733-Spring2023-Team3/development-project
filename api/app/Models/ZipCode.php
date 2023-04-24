@@ -21,6 +21,6 @@ class ZipCode extends NeoEloquent
 
     public function users()
     {
-        return $this->belongsTo(User::class, 'IN_ZIP_CODE');
+        return $this->belongsTo(User::class, 'IN_ZIPCODE');
     }
 }

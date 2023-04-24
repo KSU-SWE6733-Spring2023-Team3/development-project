@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Age;
 use App\Models\Attitude;
+use App\Models\Gender;
 use App\Models\SkillLevel;
 use App\Models\User;
 use App\Models\UserInterest;
+use App\Models\ZipCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use mysql_xdevapi\Session;

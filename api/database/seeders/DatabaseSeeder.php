@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
 
 
         $faker = Faker\Factory::create();
-        $faker->seed(microtime());
+        $faker->seed(random_int(0,100000));
 
         $activities = Activity::query()->get();
         $attitudes = Attitude::query()->get();
@@ -52,8 +52,16 @@ class DatabaseSeeder extends Seeder
         {
             $username = $faker->name();
             $email = $faker->email();
-            $password = $faker->password();
+            $password = $faker->password(16,16);
 
+
+            $creds = [
+                'email' => $email,
+                'password' => $password
+            ];
+
+            PRINT_R(implode(',', $creds));
+            PRINT_R(PHP_EOL);
 
             $user = User::create([
                 'name' => $username,
@@ -64,9 +72,10 @@ class DatabaseSeeder extends Seeder
 
             $userZip = Faker\Provider\Address::postcode();
 
-            $zipNode = ZipCode::firstOrCreate(['value' => '"' . $userZip . '"']);
+            $zipNode = ZipCode::firstOrCreate(['value' => '"' . 45477 . '"']);
 
             $user->zipCode()->save($zipNode);
+            $zipNode->users()->save($user);
 
             $age = $faker->numberBetween(18, 65);
             $ageRangeStart = $faker->numberBetween(18, $age);
@@ -85,7 +94,7 @@ class DatabaseSeeder extends Seeder
             $userGender = $faker->randomElement($genders);
             $user->identifiesAs()->save($userGender);
 
-            $preferenceCount = $faker->randomNumber(1,3);
+            $preferenceCount = $faker->numberBetween(1,3);
             $userPreferences = $faker->randomElements($genders, $preferenceCount);
             foreach($userPreferences as $preference)
             {
