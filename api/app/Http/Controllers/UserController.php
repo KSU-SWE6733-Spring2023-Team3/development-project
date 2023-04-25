@@ -59,14 +59,20 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $ageNode = Age::query()->first();
-        $genderNode = Gender::query()->first();
-        $zipNode = ZipCode::query()->first();
         $userGenderIdentity = $user->identifiesAs()->first();
         $userAge = $user->age()->first();
         $userPreferencesCollection = $user->preference()->get();
         $userZip = $user->zipCode()->first();
         $userAgeRange = $user->ageRange()->get();
+
+
+        $userActivityArr = [];
+
+        $userInterests = $user->interests()->get();
+        foreach($userInterests as $userInterest)
+        {
+            $userActivityArr[] = $userInterest->activity()->first()->name;
+        }
 
         $userPreferences = [];
 
@@ -88,6 +94,19 @@ class UserController extends Controller
 
         }
 
+        /**
+         * Broad-spectrum matching algorithm here.
+         *
+         * Get all of the users who:
+         *   - Are in the same zip code
+         *   - Are of the identity the user prefers
+         *   - Are in the age range the user has set
+         *   - Share an interest with the user
+         *
+         * TODO: Match up the reverse, where the users selected are also
+         *   - Prefer users of the Users identity
+         *   - Are interested in people of the Users age
+         */
         $initialUserPool = User::
             whereHas('zipCode', function($q) use ($userZip) {
                 $q->where('value', '=', $userZip->value);
@@ -98,12 +117,15 @@ class UserController extends Controller
             ->whereHas('ageRange', function($q) use ($ageRangeStart, $ageRangeEnd) {
                 $q->where('value', '>', $ageRangeStart)->where('value','<', $ageRangeEnd);
             })
+            ->whereHas('interests', function($userInterestNodeQuery) use ($userActivityArr) {
+                $userInterestNodeQuery->whereHas('activity', function($activityNodeQuery) use ($userActivityArr) {
+                    $activityNodeQuery->where('name', 'IN', $userActivityArr);
+                });
+            })
+            ->get()
+            ->unique();
 
-
-
-
-            ->get()->unique();return response($initialUserPool, 200);
-//            ->getQuery()->toCypher();return response($initialUserPool, 200);
+        return response($initialUserPool, 200);
 
     }
 

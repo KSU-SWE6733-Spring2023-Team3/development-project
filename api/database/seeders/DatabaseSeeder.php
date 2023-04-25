@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    public const MAX_USERS = 25;
+    public const MAX_USERS = 150;
 
     /**
      * Seed the application's database.
@@ -75,7 +75,6 @@ class DatabaseSeeder extends Seeder
             $zipNode = ZipCode::firstOrCreate(['value' => '"' . 45477 . '"']);
 
             $user->zipCode()->save($zipNode);
-            $zipNode->users()->save($user);
 
             $age = $faker->numberBetween(18, 65);
             $ageRangeStart = $faker->numberBetween(18, $age);
