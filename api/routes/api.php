@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::controller(\App\Http\Controllers\UserMessageController::class)->group(function() {
        Route::post('/message', 'store');
-       Route::get('/message', 'list');
+       Route::get('/message/{fromEmail}', 'list');
     });
 });
 

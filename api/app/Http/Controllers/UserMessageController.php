@@ -56,11 +56,13 @@ class UserMessageController extends Controller
     }
 
 
-    public function list(Request $request)
+    public function list(Request $request, $fromEmail)
     {
         $user = $request->user();
 
-        $messages = $user->receivedMessages()->get();
+        $messages = $user->receivedMessages()->whereHas('from', function($userNodeQuery) use ($fromEmail) {
+            $userNodeQuery->where('email', $fromEmail);
+        })->get();
 
         return response()->json([
             'success' => $messages

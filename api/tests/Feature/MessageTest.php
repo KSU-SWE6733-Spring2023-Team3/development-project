@@ -118,7 +118,7 @@ class MessageTest extends TestCase
     public function test_getMessagesSuccess(): void
     {
         $this->login(self::EMAIL_2);
-        $response = $this->get(self::MESSAGE_GET_ENDPOINT);
+        $response = $this->get(self::MESSAGE_GET_ENDPOINT . '/' . self::EMAIL_1);
         $response->assertStatus(200);
         $response->assertJson([
             'success' => []
