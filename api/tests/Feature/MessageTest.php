@@ -36,8 +36,21 @@ class MessageTest extends TestCase
     }
 
 
+    private function login($email)
+    {
+        $postData = [
+            'email' => $email,
+            'password' => self::PASSWORD,
+        ];
+
+        // Session is stored in the class ($this), so we don't need to do weird header stuff.
+        $this->post('api/login', $postData);
+    }
+
+
     public function test_sendMessageUserDNE(): void
     {
+        $this->login(self::EMAIL_1);
         $postData = [
             'message' => 'Lorum Ipsum',
             'username' => 'someuserdoesntexist@nodomain.com'
@@ -53,6 +66,7 @@ class MessageTest extends TestCase
 
     public function test_sendMessageNoMessageKey(): void
     {
+        $this->login(self::EMAIL_1);
         $postData = [
             'username' => self::EMAIL_2,
         ];
@@ -66,6 +80,7 @@ class MessageTest extends TestCase
 
     public function test_sendMessageNoUsernameKey(): void
     {
+        $this->login(self::EMAIL_1);
         $postData = [
           'message' => 'Lorum Ipsum',
         ];
@@ -80,6 +95,7 @@ class MessageTest extends TestCase
 
     public function test_sendMessageSuccess(): void
     {
+        $this->login(self::EMAIL_1);
         $postData = [
             'message' => 'Lorum Ipsum',
             'username' => self::EMAIL_2
