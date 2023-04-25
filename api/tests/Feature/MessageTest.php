@@ -113,4 +113,15 @@ class MessageTest extends TestCase
         $this->assertSame('Lorum Ipsum', $user->sentMessages()->first()->text);
         $this->assertSame(self::EMAIL_2, $user->sentMessages()->first()->to()->first()->email);
     }
+
+
+    public function test_getMessagesSuccess(): void
+    {
+        $this->login(self::EMAIL_2);
+        $response = $this->get(self::MESSAGE_GET_ENDPOINT);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => []
+        ]);
+    }
 }

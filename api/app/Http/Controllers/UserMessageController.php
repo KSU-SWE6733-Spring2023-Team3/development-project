@@ -55,4 +55,16 @@ class UserMessageController extends Controller
 
     }
 
+
+    public function list(Request $request)
+    {
+        $user = $request->user();
+
+        $messages = $user->receivedMessages()->get();
+
+        return response()->json([
+            'success' => $messages
+        ], 200);
+    }
+
 }
