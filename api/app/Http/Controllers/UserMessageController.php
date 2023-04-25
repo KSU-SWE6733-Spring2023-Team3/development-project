@@ -49,6 +49,10 @@ class UserMessageController extends Controller
 
         $targetUser->receivedMessages()->save($messageNode);
 
+        return response()->json([
+            'success' => self::MESSAGE_SEND_SUCCESS_MSG
+        ], 200);
+
     }
 
 }
