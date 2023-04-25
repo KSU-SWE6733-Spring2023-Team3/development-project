@@ -92,9 +92,9 @@ class MessageTest extends TestCase
             'success' => UserMessageController::MESSAGE_SEND_SUCCESS_MSG,
         ]);
 
-        $user = User::find('email', self::EMAIL_1);
+        $user = User::where('email', self::EMAIL_1)->first();
 
-        $this->assertSame('Lorum Ipsum', $user->messages()->first()->text);
-        $this->assertSame(self::EMAIL_2, $user->messages()->first()->toUser()->first()->email);
+        $this->assertSame('Lorum Ipsum', $user->sentMessages()->first()->text);
+        $this->assertSame(self::EMAIL_2, $user->sentMessages()->first()->to()->first()->email);
     }
 }
