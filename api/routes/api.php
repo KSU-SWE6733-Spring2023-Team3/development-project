@@ -45,6 +45,11 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::get('/attitude', 'attitudes');
         Route::get('/skillLevel', 'skillLevels');
     });
+
+    Route::controller(\App\Http\Controllers\UserMessageController::class)->group(function() {
+       Route::post('/message', 'store');
+       Route::get('/message', 'list');
+    });
 });
 
 
