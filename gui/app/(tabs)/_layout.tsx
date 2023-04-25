@@ -57,6 +57,15 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="explore" color={color} />,
         }}
       />
+       <Tabs.Screen
+          name="chats"
+          options={{
+            title: "Chats",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="message" color={color} />
+            ),
+          }}
+        />
     </Tabs>
   </>
   );

@@ -1,0 +1,71 @@
+import { Link } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+} from "react-native";
+import ChatItem from "./ChatItem";
+import ChatScreen from "./chatScreen";
+
+const Chat = ({ setChat, chatId }) => {
+  return (
+    <>
+      <TouchableOpacity onPress={() => setChat("")}>
+        <Text>Go back</Text>
+      </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.chatScreen}>
+          <ChatScreen chatId={chatId} />
+        </View>
+      </View>
+    </>
+  );
+};
+export default Chat;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "auto",
+    width: "100%",
+    textAlign: "center",
+    // borderWidth: 1,
+  },
+  chatSideBar: {
+    fontWeight: "bold",
+    textAlign: "center",
+    width: "30%",
+    height: "100%",
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColorLeftColor: "#666",
+    borderColorRightColor: "#666",
+    overflowY: "scroll",
+  },
+  chatScreen: {
+    flex: 1,
+    height: "100%",
+  },
+  cardTitleStyle: {
+    color: "black",
+    fontSize: 24,
+  },
+  textTitle: {
+    fontSize: 15,
+  },
+  chatItem: {
+    textAlign: "left",
+    margin: 5,
+    borderBottomWidth: 2,
+  },
+});

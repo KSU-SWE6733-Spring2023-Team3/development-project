@@ -4,13 +4,14 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
+Button,
   Dimensions,
   Animated,
   PanResponder,
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "expo-router";
 import useFetch from "../../hooks/useFetch";
 import InterestTable from "./InterestsTable";
 import {getRequest} from "../../util/ajax";
@@ -53,7 +54,7 @@ const SwipeableCard = ({
   lastSwipedItemId,
 }: any) => {
 
-
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [xPosition, setXPosition] = useState(new Animated.Value(0));
   const [user, setUser] = useState(item);
@@ -229,12 +230,49 @@ const SwipeableCard = ({
       <View
         style={{
           flexDirection: "row",
-          margin: 5,
-          alignSelf: "flex-start",
+
+          justifyContent: "space-between",
         }}
       >
-        <Text style={{ fontSize: 20 }}>Interests :</Text>
-        <InterestTable DATA={user.interests} />
+        {/* <Text style={{ fontSize: 10 }}>Interests :</Text> */}
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            width: "20%",
+          }}
+        >
+          {/* TODO: UnComment when not conneted with database*/}
+          {/* <Button
+            title="Message"
+            onPress={() => {
+              navigation.navigate("chats", {
+                userID: "7",
+                name: "test",
+              });
+            }}
+          /> */}
+
+          {/* when connected with database */}
+          <Button
+            title="Message"
+            onPress={() => {
+              navigation.navigate("chats", {
+                userID: item.id,
+                name: item.name,
+              });
+            }}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            width: "80%",
+          }}
+        >
+          <InterestTable DATA={user.interests} />
+        </View>
       </View>
     </Animated.View>
   );
