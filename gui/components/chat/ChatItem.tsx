@@ -1,17 +1,24 @@
+import {useNavigation} from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {useNavigationLink} from "react-native-paper/lib/typescript/src/react-navigation/adapter";
 
-const ChatItem = ({ item, setSelectChat }) => {
+const ChatItem = ({ item }) => {
+
+  const navigation = useNavigation();
+  console.log(item);
   return (
-    <TouchableOpacity onPress={() => setSelectChat(item.id)}>
+    <TouchableOpacity onPress={() =>  navigation.navigate("chats", {
+      'userID': item.id
+    })}>
       <View style={styles.container}>
         <Image source={{ uri: item.avatarUrl }} style={styles.avatar} />
         <View style={styles.chatContent}>
           <View style={styles.chatHeader}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.time}>{item.time}</Text>
+            <Text style={styles.name}>{item.user}</Text>
+            <Text style={styles.time}>{item['created_at']}</Text>
           </View>
-          <Text style={styles.message}>{item.lastMessage}</Text>
+          <Text style={styles.message}>{item.text}</Text>
         </View>
       </View>
     </TouchableOpacity>

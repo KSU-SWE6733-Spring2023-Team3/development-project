@@ -1,24 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import {useAuth} from "../../context/auth";
 
 const ChatBox = ({ item }) => {
-  //   const { user } = useAuth();
-  const user = { name: "John" };
+    const { user } = useAuth();
   const isYou = (name) => user.name === name;
   return (
-    <View style={isYou(item.name) ? styles.isYourchatItem : styles.chatItem}>
+    <View style={isYou(item.author) ? styles.isYourchatItem : styles.chatItem}>
       <Image source={{ uri: item.avatarUrl }} style={styles.avatar} />
       <View style={styles.chatContent}>
         <View
-          style={isYou(item.name) ? styles.isYouchatHeader : styles.chatHeader}
+          style={isYou(item.author) ? styles.isYouchatHeader : styles.chatHeader}
         >
           <Text style={styles.name}>
-            {isYou(item.name) ? <Text>You</Text> : item.name}
+            {isYou(item.author) ? <Text>You</Text> : item.author}
           </Text>
-          <Text style={styles.time}>{item.time}</Text>
+          <Text style={styles.time}>{item.created_at}</Text>
         </View>
-        <Text style={isYou(item.name) ? styles.isYourMessage : styles.message}>
-          {item.message}
+        <Text style={isYou(item.author) ? styles.isYourMessage : styles.message}>
+          {item.text}
         </Text>
       </View>
     </View>

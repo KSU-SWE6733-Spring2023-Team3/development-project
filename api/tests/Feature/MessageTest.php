@@ -21,7 +21,7 @@ class MessageTest extends TestCase
     {
         parent::setUp();
 
-        User::query()->delete();
+        User::where('email', 'IN', [self::EMAIL_1, self::EMAIL_2])->get()->delete();
         User::create([
             'name' => 'John Foo',
             'email' => self::EMAIL_1,

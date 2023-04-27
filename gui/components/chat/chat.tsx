@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -9,16 +9,24 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback, Button,
 } from "react-native";
 import ChatItem from "./ChatItem";
 import ChatScreen from "./chatScreen";
 
 const Chat = ({ setChat, chatId }) => {
+
+  const navigation = useNavigation();
+
   return (
     <>
       <TouchableOpacity onPress={() => setChat("")}>
-        <Text>Go back</Text>
+        <Button title={"Go Back"} onPress={() => {
+          navigation.navigate("chats", {
+          });
+          setChat("");
+
+        }}/>
       </TouchableOpacity>
       <View style={styles.container}>
         <View style={styles.chatScreen}>

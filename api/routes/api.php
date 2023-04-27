@@ -17,18 +17,11 @@ Route::controller(\App\Http\Controllers\LoginController::class)->group(function(
    Route::post('/login', 'authenticate')->name('login');
 });
 
-//Route::controller(\App\Http\Controllers\UserInterestController::class)->group(function() {
-//    Route::get('/activity', 'activities');
-//    Route::get('/attitude', 'attitudes');
-//    Route::get('/skillLevel', 'skillLevels');
-//});
-
-
 Route::controller(\App\Http\Controllers\UserController::class)->group(function() {
     Route::post('/user', 'store');
 });
 
-Route::middleware('auth:sanctum')->group( function () {
+Route::middleware('auth:sanctum,throttle:1,1000')->group( function () {
     Route::controller(\App\Http\Controllers\UserController::class)->group(function() {
        Route::get('/user', 'index');
     });
@@ -48,10 +41,10 @@ Route::middleware('auth:sanctum')->group( function () {
     });
 
     Route::controller(\App\Http\Controllers\UserMessageController::class)->group(function() {
-       Route::post('/message', 'store');
-       Route::get('/message/{fromEmail}', 'list');
+       Route::post('/user/message', 'store');
+       Route::get('/user/messages', 'list');
+       Route::get('/user/messages/{userID}', 'show');
     });
 });
-
 
 

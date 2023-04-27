@@ -182,7 +182,6 @@ const SwipeableCard = ({
   }, []);
 
 
-  // TODO: add comment when not connected  with backend.
   if (loading) {
     return <Text>Loading...</Text>;
   }

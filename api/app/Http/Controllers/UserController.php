@@ -108,9 +108,9 @@ class UserController extends Controller
          *   - Are interested in people of the Users age
          */
         $initialUserPool = User::
-            whereHas('zipCode', function($q) use ($userZip) {
-                $q->where('value', '=', $userZip->value);
-            })
+        whereHas('zipCode', function($q) use ($userZip) {
+            $q->where('value', '=', $userZip->value);
+        })
             ->whereHas('preference', function($q) use ($userPreferences, $userGenderIdentity) {
                 $q->where('value', "IN", $userPreferences);
             })
@@ -123,7 +123,8 @@ class UserController extends Controller
                 });
             })
             ->get()
-            ->unique();
+            ->unique()
+            ->take(5);
 
         return response($initialUserPool, 200);
 

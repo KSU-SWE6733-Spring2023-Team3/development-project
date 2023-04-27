@@ -12,39 +12,32 @@ import {
   Keyboard,
   
 } from "react-native";
-import useFetch from "../../hooks/useFetch";
 import { useAuth } from "../../context/auth";
 import ChatBox from "./chatBox";
+import {getRequest, postRequest} from "../../util/ajax";
 
 const ChatScreen = ({ chatId }) => {
   const [message, setMessage] = React.useState("");
     const { user }:any = useAuth();
   // const user = { name: "John" };
   const isYou = (name) => user.name === name;
-  // TODO: uncomment when connected with database to retrieve previous messages
-  const { data, loading, error } = useFetch(`/api/users/chats?chatID=3`);
-  const [messages, setMessages] = useState<any>(data);
-  
-  //TODO: commenct when not connected with db 
-  // const [messages, setMessages] = React.useState([
-  //   {
-  //     id: "1",
-  //     avatarUrl: "https://randomuser.me/api/portraits/men/3.jpg",
-  //     name: "Jane",
-  //     message: "Hello",
-  //     time: "10:00 AM",
-  //   },
 
-  //   {
-  //     id: "3",
-  //     avatarUrl: "https://randomuser.me/api/portraits/men/3.jpg",
-  //     name: "Jane",
-  //     message: "How are you?",
-  //     time: "10:05 AM",
-  //   },
-  // ]);
+  const [messages, setMessages] = useState<any>([]);
+  const [error, setError] = useState<any>("");
+  const [loading, setLoading] = useState<any>(true);
+
+
   useEffect(() => {
-    //TODO: fetch messages using chatId and set them to messages
+    getRequest('api/user/messages/' + chatId).then((response) => {
+      if (response.data.hasOwnProperty('success')) {
+        console.log(response.data.success);
+        setMessages(response.data.success);
+      } else {
+        setError(response.data.error);
+      }
+      setLoading(false);
+
+    });
 
     const showSubscription = Keyboard.addListener(
       "keyboardDidShow",
@@ -58,7 +51,7 @@ const ChatScreen = ({ chatId }) => {
       showSubscription.remove();
       hideSubscription.remove();
     };
-  }, []);
+  }, [chatId]);
 
   const [keyboardOffset, setKeyboardOffset] = React.useState(0);
   const handleKeyboardDidShow = (event) => {
@@ -70,41 +63,41 @@ const ChatScreen = ({ chatId }) => {
   };
   const handleSend = () => {
     if (message) {
-      // TODO: Uncomment when not connected with database
-      // const newMessage = {
-      //   id: String(Math.random()),
-      //   avatarUrl: "https://randomuser.me/api/portraits/men/4.jpg",
-      //   name: "John",
-      //   message,
-      //   time: "10:10 AM",
 
-      // };
-   
-      // TODO uncomment when connected with database
-      const newMessage = {
-        // id: String(Math.random()),
-        avatarUrl:user?.icon || "https://randomuser.me/api/portraits/men/4.jpg",
-        name: user?.name,
-        message,
-        time: new Date(),
-      };
-      setMessages([newMessage, ...messages]);
-      setMessage("");
+      let postData = new FormData();
+      postData.append('toUser', chatId);
+      postData.append('message', message);
+
+      postRequest('api/user/message', postData).then((response) => {
+        if(response.data.hasOwnProperty('success')) {
+          const newMessage = {
+            id: String(Math.random()),
+            avatarUrl:user?.icon || "https://randomuser.me/api/portraits/men/4.jpg",
+            name: user?.name,
+            message,
+            time: new Date().toISOString(),
+          };
+          setMessages([newMessage, ...messages]);
+          setMessage("");
+        } else {
+          setError(response.data.error);
+        }
+      });
     }
-
   };
+
   const handleKeyDown=(e)=>{
     if(e.nativeEvent.key==="Enter"){
-      console.log("key down ")
       handleSend();
     } 
-  }
+  };
+
+
   const renderItem = ({ item }) => <ChatBox item={item} />;
-  // TODO : Uncomment this before connectinog with database.
   if(loading){
     return <Text>Loading...</Text>
   }
-  if(error){
+  if(error.length > 0){
     return <Text>Try Again. Some thing went wrong.</Text>
   }
   
@@ -211,6 +204,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: "#f1f1f1",
     borderRadius: 20,
+    borderColor: '#000000',
+    borderWidth: 1,
+    borderStyle: "solid"
+
   },
   sendButton: { padding: 10, marginBottom: 10 },
   sendButtonText: {},

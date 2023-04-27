@@ -18,7 +18,7 @@ class UserMessageController extends Controller
     public function store(Request $request)
     {
         $message = $request->input("message") ?? null;
-        $username = $request->input('username') ?? null;
+        $toUserId = $request->input('toUser') ?? null;
 
         $user = $request->user();
 
@@ -28,13 +28,13 @@ class UserMessageController extends Controller
             ], 200);
         }
 
-        if (empty($username)) {
+        if (empty($toUserId)) {
             return response()->json([
                 'error' => self::USER_KEY_NOT_SET_ERR_MSG
             ], 200);
         }
 
-        $targetUser = User::where('email', $username)->first();
+        $targetUser = User::where('id', $toUserId)->first();
 
         if (empty($targetUser))
         {
@@ -56,13 +56,100 @@ class UserMessageController extends Controller
     }
 
 
-    public function list(Request $request, $fromEmail)
+    public function list(Request $request)
     {
         $user = $request->user();
 
-        $messages = $user->receivedMessages()->whereHas('from', function($userNodeQuery) use ($fromEmail) {
-            $userNodeQuery->where('email', $fromEmail);
-        })->get();
+        $messages = [];
+
+        // Get all messages this user has sent
+        $sentMessages = $user->sentMessages()->get();
+        foreach($sentMessages as $sentMessage)
+        {
+
+            $otherUser = $sentMessage->to()->first();
+            $message = [
+                'text' => $sentMessage->text,
+                'created_at' => $sentMessage['created_at'],
+                'user' => $otherUser->name,
+                'id' => $otherUser->id,
+                ];
+
+            if(!isset($messages[$message['user']]))
+            {
+                $messages[$message['user']] = $message;
+            }
+            else
+            {
+                if(strtotime($messages[$message['user']]['created_at']) < strtotime($message['created_at'] ))
+                {
+                    $messages[$message['user']] = $message;
+                }
+            }
+        }
+
+
+        $receivedMessages = $user->receivedMessages()->get();
+        foreach($receivedMessages as $receivedMessage)
+        {
+            $otherUser = $receivedMessage->from()->first();
+            $message = [
+                'text' => $receivedMessage->text,
+                'created_at' => $receivedMessage['created_at'],
+                'user' => $otherUser->name,
+                'id' => $otherUser->id,
+            ];
+
+            if(!isset($messages[$message['user']]))
+            {
+                $messages[$message['user']] = $message;
+            }
+            else
+            {
+                if(strtotime($messages[$message['user']]['created_at']) < strtotime($message['created_at'] ))
+                {
+                    $messages[$message['user']] = $message;
+                }
+            }
+        }
+
+
+        return response()->json([
+            'success' => $messages
+        ],200);
+    }
+
+    public function show(Request $request, $fromId)
+    {
+        $user = $request->user();
+
+//        $messages = UserMessage::whereHas('to', function($toUserNodeQuery) use ($fromId) {
+//            $toUserNodeQuery->where('id', '=', $fromId);
+//        })
+
+
+        $messages = [];
+        $sentMessages = $user->sentMessages()->get();
+            $receivedMessages = $user->receivedMessages()->get();
+
+            $otherUser = User::find($fromId);
+
+            foreach($sentMessages as $sentMessage)
+            {
+                if($sentMessage->to()->first()->id == $fromId) {
+                    $sentMessage['author'] = $user->name;
+                    $messages[] = $sentMessage;
+                }
+            }
+
+            foreach($receivedMessages as $receivedMessage)
+            {
+                if($receivedMessage->from()->first()->id == $user->id)
+                {
+                    $receivedMessage['author'] = $otherUser->name;
+                    $messages[] = $receivedMessage;
+                }
+            }
 
         return response()->json([
             'success' => $messages

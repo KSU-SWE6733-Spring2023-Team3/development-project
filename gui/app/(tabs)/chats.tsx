@@ -6,6 +6,7 @@ import { useNavigation, useRouter } from "expo-router";
 import Chat from "../../components/chat/chat";
 import { useRoute } from "@react-navigation/native";
 import useFetch from "./../../hooks/useFetch"
+import {getRequest} from "../../util/ajax";
 const Chats = ({}) => {
   const arr = [
     {
@@ -54,48 +55,63 @@ const Chats = ({}) => {
       time: "12:00",
     },
   ];
-  //   TODO: comment when not  connected with db
-  const { data, loading, error } = useFetch(`/api/users/chats`);
-  const [chats, setChats] = useState(data);
-  
-  //   TODO: comment when connected with db
-  // const [chats, setChats] = useState(arr);
+
+    const [chats, setChats] = useState([]);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [selectChat, setSelectChat] = useState("");
 
   const route = useRoute();
-  let name = "";
-  let userId = "";
-  // if (route.params) {
-  //   name = route.params;
-  //   userId = route.params;
-  // }
+    useEffect(() => {
+      console.log("Loaded chats tab");
+      let name = "";
+      let userId = "";
+      let url = 'api/user/messages';
+      let doRequest = true;
+      if (route.params) {
+        console.log("In route params");
+        name = route.params["name"];
+        userId = route.params["userID"];
 
-  const [selectChat, setSelectChat] = useState("");
-  // if (name && userId) {
-  //   console.log("run");
-  //   setSelectChat(userId);
-  // }
+        if (typeof userId !== 'undefined') {
+          setSelectChat(userId);
+          doRequest = false;
+        }
+      }
 
+        if(doRequest) {
+          getRequest(url).then( (response) => {
+            if(response.data.hasOwnProperty('success')) {
+              let messages = [];
+              Object.keys(response.data.success ).forEach(key => {
+                messages.push(response.data.success[key]);
+              });
+              setChats(messages);
+              setSelectChat(undefined);
+            } else {
+              setError(response.data.error);
+            }
+          });
+        }
 
-  function handleBackButtonClick() {
-    console.log("back button pressed");
-    setSelectChat("");
-    return true;
-  }
+        setLoading(false);
+    }, [selectChat, route]);
 
   const renderItem = ({ item }) => (
     <ChatItem item={item} setSelectChat={setSelectChat} />
   );
 
-  // TODO : Uncomment this before connectinog with database.
   if(loading){
     return <Text>Loading...</Text>
   }
   if(error){
     return <Text>Try Again. Some thing went wrong.</Text>
   }
+  console.log(selectChat);
+  console.log(typeof selectChat);
   return (
     <View style={styles.container}>
-      {!selectChat ? (
+      {typeof selectChat === "undefined" || selectChat.length == 0 ? (
         <FlatList
           data={chats}
           renderItem={renderItem}
