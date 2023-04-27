@@ -44,6 +44,8 @@ class UserInterestsCreateTest extends TestCase
         ]);
 
 
+        UserInterest::query()->delete();
+
         Activity::query()->delete();
         Attitude::query()->delete();
         SkillLevel::query()->delete();

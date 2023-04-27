@@ -9,7 +9,7 @@ const Cards = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getRequest(`api/user/`).then((response) => {
+    getRequest(`api/user`).then((response) => {
       setUsers(response.data);
       setLoading(false);
     });
