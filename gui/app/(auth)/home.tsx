@@ -11,7 +11,8 @@ export default function LoginLayout() {
         >
             <View style={styles.body}>
 
-                <Text style={globalStyles.text}> Welcome to KSU SWE 6733 Spring 2023 Group 3 Development Project! </Text>
+                {/* <Text style={globalStyles.text}> Welcome to KSU SWE 6733 Spring 2023 Group 3 Development Project! </Text> */}
+                <Text style={globalStyles.text}> Join a community of adventurous singles and start your journey to love! </Text>
                 <Link style={{...globalStyles.text, ...globalStyles.btn}} href="/(auth)/login">Login!</Link>
                 <Link style={{...globalStyles.text, ...globalStyles.btn}} href="/(auth)/register">Sign Up!</Link>
             </View>
@@ -24,12 +25,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        resizeMode:'cover'
+        resizeMode:'cover',
+        backgroundColor: 'white',
     },
     body:{
         width:'100%',
         height:'100%',
-        backgroundColor:'rgba(52, 52, 52, 0.8)',
+        backgroundColor: 'white',//backgroundColor:'rgba(52, 52, 52, 0.8)',
         justifyContent:'center',
         alignItems:'center'
     },

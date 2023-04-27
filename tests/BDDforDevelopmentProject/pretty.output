@@ -1,0 +1,51 @@
+Feature: Check Registration Page # features/Register.feature:1
+
+  Scenario: User registers in to our website     # features/Register.feature:3
+    Given a user launches Chrome                 # features/steps/steps.py:7
+    When a user opens our homepage               # features/steps/steps.py:12
+    And they click the sign up page              # features/steps/steps.py:20
+    And the user successfully registers          # features/steps/steps.py:33
+    Then the page displays Sign Out as an option # features/steps/steps.py:104
+
+  Scenario: User doesn't fill out Name when registering  # features/Register.feature:10
+    Given a user launches Chrome                         # features/steps/steps.py:7
+    When a user opens our homepage                       # features/steps/steps.py:12
+    And they click the sign up page                      # features/steps/steps.py:20
+    And the user forgets to add Name                     # features/steps/steps.py:44
+    Then the Name error message is returned              # features/steps/steps.py:108
+
+  Scenario: User doesn't fill out Email when registering  # features/Register.feature:17
+    Given a user launches Chrome                          # features/steps/steps.py:7
+    When a user opens our homepage                        # features/steps/steps.py:12
+    And they click the sign up page                       # features/steps/steps.py:20
+    And the user forgets to add Email                     # features/steps/steps.py:53
+    Then the Name error message is returned               # features/steps/steps.py:108
+
+  Scenario: User doesn't fill out Password when registering  # features/Register.feature:24
+    Given a user launches Chrome                             # features/steps/steps.py:7
+    When a user opens our homepage                           # features/steps/steps.py:12
+    And they click the sign up page                          # features/steps/steps.py:20
+    And the user forgets to add Password                     # features/steps/steps.py:62
+    Then the Password error message is returned              # features/steps/steps.py:116
+
+  Scenario: User has incorrect Name when registering  # features/Register.feature:31
+    Given a user launches Chrome                      # features/steps/steps.py:7
+    When a user opens our homepage                    # features/steps/steps.py:12
+    And they click the sign up page                   # features/steps/steps.py:20
+    And the user has incorrect Name                   # features/steps/steps.py:71
+    Then the Name error message is returned           # features/steps/steps.py:108
+
+  Scenario: User tries to register an illogical Email format  # features/Register.feature:38
+    Given a user launches Chrome                              # features/steps/steps.py:7
+    When a user opens our homepage                            # features/steps/steps.py:12
+    And they click the sign up page                           # features/steps/steps.py:20
+    And the user adds an invalid Email format                 # features/steps/steps.py:82
+    Then the Name error message is returned                   # features/steps/steps.py:108
+
+  Scenario: User does not use long enough Password when registering  # features/Register.feature:45
+    Given a user launches Chrome                                     # features/steps/steps.py:7
+    When a user opens our homepage                                   # features/steps/steps.py:12
+    And they click the sign up page                                  # features/steps/steps.py:20
+    And the user does not use a long enough Password                 # features/steps/steps.py:93
+    Then the Password error message is returned                      # features/steps/steps.py:116
+

@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import useFetch from "../../hooks/useFetch";
 import InterestTable from "./InterestsTable";
+import {getRequest} from "../../util/ajax";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
@@ -51,27 +52,13 @@ const SwipeableCard = ({
   swipedDirection,
   lastSwipedItemId,
 }: any) => {
-  const { data, loading, error } = useFetch(`/api/user/interest/${item.email}`);
 
-  // TODO uncomment when not connected with backend 
-  // const temdata = [
-  //   {
-  //     activity: "Activity",
-  //     attitude: "Attitude",
-  //     skillLevel: "SkillLevel",
-  //   },
-  //   {
-  //     activity: "Activity",
-  //     attitude: "Attitude",
-  //     skillLevel: "SkillLeve",
-  //   },
-  //   {
-  //     activity: "Activity",
-  //     attitude: "Attitude",
-  //     skillLevel: "SkillLevel",
-  //   },
-  // ];
+
+  const [loading, setLoading] = useState(true);
   const [xPosition, setXPosition] = useState(new Animated.Value(0));
+  const [user, setUser] = useState(item);
+
+
   let swipeDirection = "";
   let cardOpacity = new Animated.Value(1);
 
@@ -170,14 +157,35 @@ const SwipeableCard = ({
       });
     }
   };
-  // TODO: addd comment when not connected  with backend.
+
+  useEffect(() => {
+    getRequest('api/user/interest/' + item.email).then((response) => {
+      if(response.hasOwnProperty('data')) {
+        const responseData = response.data;
+        if(responseData.hasOwnProperty("success")) {
+          const userInterests = responseData.success;
+          const newUser = user;
+          newUser.interests = userInterests;
+          newUser.interestsBrief = '';
+          for (let i = 0; i < userInterests.length; i++) {
+            newUser.interestsBrief += userInterests[i].activity;
+            if(i < (userInterests.length - 1)) {
+              newUser.interestsBrief += ',';
+            }
+          }
+          setUser(newUser);
+          setLoading(false);
+        }
+      }
+    })
+  }, []);
+
+
+  // TODO: add comment when not connected  with backend.
   if (loading) {
     return <Text>Loading...</Text>;
   }
 
-  if (error) {
-    return <Text>Error: some thing went wrong</Text>;
-  }
   return (
     <Animated.View
       {...panResponder.panHandlers}
@@ -192,15 +200,15 @@ const SwipeableCard = ({
     >
       <ImageBackground
         source={{
-          uri: item.imageUrl,
+          uri: user.imageUrl,
         }}
         style={{ flex: 1, height: "100%", width: "100%" }}
       >
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}
         >
-          <Text style={styles.cardTitleStyle}> {item.name} </Text>
-          <Text style={styles.cardTitleStyle}> {item.interests} </Text>
+          <Text style={styles.cardTitleStyle}> {user.name} </Text>
+          <Text style={styles.cardTitleStyle}> {user.interestsBrief} </Text>
 
           <View style={{ flexDirection: "row", margin: 5 }}>
             <TouchableOpacity
@@ -226,7 +234,7 @@ const SwipeableCard = ({
         }}
       >
         <Text style={{ fontSize: 20 }}>Interests :</Text>
-        <InterestTable DATA={data} />
+        <InterestTable DATA={user.interests} />
       </View>
     </Animated.View>
   );
