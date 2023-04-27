@@ -44,6 +44,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::get('/activity', 'activities');
         Route::get('/attitude', 'attitudes');
         Route::get('/skillLevel', 'skillLevels');
+        Route::get('/matches/possible', 'getMatches');
     });
 });
 

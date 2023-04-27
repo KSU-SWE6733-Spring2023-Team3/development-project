@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Age;
+use App\Models\Gender;
 use App\Models\Photo;
+use App\Models\UserInterest;
+use App\Models\ZipCode;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use function Symfony\Component\String\length;
 
 use App\Models\User;
+use Vinelab\NeoEloquent\Eloquent\Model;
 
 class UserController extends Controller
 {
@@ -50,10 +56,77 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return response($users, 200);
+        $user = $request->user();
+        $userGenderIdentity = $user->identifiesAs()->first();
+        $userAge = $user->age()->first();
+        $userPreferencesCollection = $user->preference()->get();
+        $userZip = $user->zipCode()->first();
+        $userAgeRange = $user->ageRange()->get();
+
+
+        $userActivityArr = [];
+
+        $userInterests = $user->interests()->get();
+        foreach($userInterests as $userInterest)
+        {
+            $userActivityArr[] = $userInterest->activity()->first()->name;
+        }
+
+        $userPreferences = [];
+
+        foreach($userPreferencesCollection as $pref)
+        {
+            $userPreferences[] = $pref->value;
+        }
+
+        $ageRangeStart = 0;
+        $ageRangeEnd = 1;
+
+        foreach($userAgeRange as $ageRange)
+        {
+            if($ageRange->value < $ageRangeStart) {
+                $ageRangeStart = $ageRange->value;
+            } elseif($ageRangeEnd < $ageRange->value) {
+                $ageRangeEnd = $ageRange->value;
+            }
+
+        }
+
+        /**
+         * Broad-spectrum matching algorithm here.
+         *
+         * Get all of the users who:
+         *   - Are in the same zip code
+         *   - Are of the identity the user prefers
+         *   - Are in the age range the user has set
+         *   - Share an interest with the user
+         *
+         * TODO: Match up the reverse, where the users selected are also
+         *   - Prefer users of the Users identity
+         *   - Are interested in people of the Users age
+         */
+        $initialUserPool = User::
+            whereHas('zipCode', function($q) use ($userZip) {
+                $q->where('value', '=', $userZip->value);
+            })
+            ->whereHas('preference', function($q) use ($userPreferences, $userGenderIdentity) {
+                $q->where('value', "IN", $userPreferences);
+            })
+            ->whereHas('ageRange', function($q) use ($ageRangeStart, $ageRangeEnd) {
+                $q->where('value', '>', $ageRangeStart)->where('value','<', $ageRangeEnd);
+            })
+            ->whereHas('interests', function($userInterestNodeQuery) use ($userActivityArr) {
+                $userInterestNodeQuery->whereHas('activity', function($activityNodeQuery) use ($userActivityArr) {
+                    $activityNodeQuery->where('name', 'IN', $userActivityArr);
+                });
+            })
+            ->get()
+            ->unique();
+
+        return response($initialUserPool, 200);
+
     }
 
     /**
