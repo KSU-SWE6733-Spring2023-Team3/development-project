@@ -27,18 +27,27 @@ const ChatScreen = ({ chatId }) => {
   const [loading, setLoading] = useState<any>(true);
 
 
-  useEffect(() => {
+
+  const getMessages = () => {
     getRequest('api/user/messages/' + chatId).then((response) => {
       if (response.data.hasOwnProperty('success')) {
-        console.log(response.data.success);
-        setMessages(response.data.success);
+        if(response.data.success.length !== messages.length) {
+          setMessages(response.data.success);
+        }
       } else {
         setError(response.data.error);
       }
       setLoading(false);
 
     });
+  };
 
+
+
+  useEffect(() => {
+    getMessages();
+
+    const pollInterval = setInterval(getMessages, 10000);
     const showSubscription = Keyboard.addListener(
       "keyboardDidShow",
       handleKeyboardDidShow
@@ -50,6 +59,7 @@ const ChatScreen = ({ chatId }) => {
     return () => {
       showSubscription.remove();
       hideSubscription.remove();
+      clearInterval(pollInterval)
     };
   }, [chatId]);
 

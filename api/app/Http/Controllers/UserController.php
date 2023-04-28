@@ -75,7 +75,6 @@ class UserController extends Controller
         }
 
         $userPreferences = [];
-
         foreach($userPreferencesCollection as $pref)
         {
             $userPreferences[] = $pref->value;
@@ -83,7 +82,6 @@ class UserController extends Controller
 
         $ageRangeStart = 0;
         $ageRangeEnd = 1;
-
         foreach($userAgeRange as $ageRange)
         {
             if($ageRange->value < $ageRangeStart) {
@@ -93,6 +91,7 @@ class UserController extends Controller
             }
 
         }
+
 
         /**
          * Broad-spectrum matching algorithm here.
@@ -122,9 +121,8 @@ class UserController extends Controller
                     $activityNodeQuery->where('name', 'IN', $userActivityArr);
                 });
             })
-            ->get()
-            ->unique()
-            ->take(5);
+            ->get()->unique()->take(5)
+            ;
 
         return response($initialUserPool, 200);
 
