@@ -9,8 +9,8 @@ use Tests\TestCase;
 
 class MessageTest extends TestCase
 {
-    private const MESSAGE_SEND_ENDPOINT = 'api/message';
-    private const MESSAGE_GET_ENDPOINT = 'api/message';
+    private const MESSAGE_SEND_ENDPOINT = 'api/user/message';
+    private const MESSAGE_GET_ENDPOINT = 'api/user/messages';
 
     private const EMAIL_1 = "johnfoo@bar.com";
     private const EMAIL_2 = "janebar@baz.com";
@@ -21,7 +21,8 @@ class MessageTest extends TestCase
     {
         parent::setUp();
 
-        User::where('email', 'IN', [self::EMAIL_1, self::EMAIL_2])->get()->delete();
+        User::where('email', self::EMAIL_1)->delete();
+        User::where('email', self::EMAIL_2)->delete();
         User::create([
             'name' => 'John Foo',
             'email' => self::EMAIL_1,
@@ -53,7 +54,7 @@ class MessageTest extends TestCase
         $this->login(self::EMAIL_1);
         $postData = [
             'message' => 'Lorum Ipsum',
-            'username' => 'someuserdoesntexist@nodomain.com'
+            'toUser' => -1
         ];
 
         $response = $this->post(self::MESSAGE_SEND_ENDPOINT, $postData);
@@ -98,7 +99,7 @@ class MessageTest extends TestCase
         $this->login(self::EMAIL_1);
         $postData = [
             'message' => 'Lorum Ipsum',
-            'username' => self::EMAIL_2
+            'toUser' => User::where('email', self::EMAIL_2)->first()->id,
         ];
 
         $response = $this->post(self::MESSAGE_SEND_ENDPOINT, $postData);

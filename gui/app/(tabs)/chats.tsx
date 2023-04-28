@@ -51,7 +51,7 @@ const Chats = ({}) => {
         const getMessageListInterval = setInterval(getMessageList, 30000);
 
         setLoading(false);
-        
+
         return () => {
           clearInterval(getMessageListInterval);
         }
