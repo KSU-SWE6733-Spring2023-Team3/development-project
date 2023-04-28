@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
                 $user->preference()->save($preference);
             }
 
-            $numUserInterests = $faker->numberBetween(1,10);
+            $numUserInterests = $faker->numberBetween(1,5);
 
             // Add some number of user interests for the given user
             for($j = 0; $j < $numUserInterests; $j++)

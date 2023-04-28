@@ -11,8 +11,7 @@ use App\Models\User;
 use App\Models\UserInterest;
 use App\Models\ZipCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use mysql_xdevapi\Session;
+
 
 class UserInterestController extends Controller
 {

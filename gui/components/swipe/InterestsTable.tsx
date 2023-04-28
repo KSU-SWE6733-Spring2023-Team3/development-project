@@ -13,7 +13,6 @@ const InterestTable = ({ DATA }) => {
       style={styles.InterestTable}
       contentContainerStyle={{
         flexDirection: "row",
-        flexWrap: "wrap",
         alignItems: "flex-start",
       }}
     />
@@ -21,11 +20,11 @@ const InterestTable = ({ DATA }) => {
 };
 
 const styles = StyleSheet.create({
-  InterestTable: { flexDirection: "row", marginTop: "3px", marginLeft: "3px" },
+  InterestTable: { flexDirection: "row", marginTop: 3, marginLeft: 3 },
   itemText: {
-    fontSize: "14px",
+    fontSize: 10,
     color: "#333",
-    marginLeft: "5px",
+    marginLeft: 5,
   },
 });
 

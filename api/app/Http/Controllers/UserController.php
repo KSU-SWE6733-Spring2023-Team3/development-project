@@ -75,7 +75,6 @@ class UserController extends Controller
         }
 
         $userPreferences = [];
-
         foreach($userPreferencesCollection as $pref)
         {
             $userPreferences[] = $pref->value;
@@ -83,7 +82,6 @@ class UserController extends Controller
 
         $ageRangeStart = 0;
         $ageRangeEnd = 1;
-
         foreach($userAgeRange as $ageRange)
         {
             if($ageRange->value < $ageRangeStart) {
@@ -93,6 +91,7 @@ class UserController extends Controller
             }
 
         }
+
 
         /**
          * Broad-spectrum matching algorithm here.
@@ -108,9 +107,9 @@ class UserController extends Controller
          *   - Are interested in people of the Users age
          */
         $initialUserPool = User::
-            whereHas('zipCode', function($q) use ($userZip) {
-                $q->where('value', '=', $userZip->value);
-            })
+        whereHas('zipCode', function($q) use ($userZip) {
+            $q->where('value', '=', $userZip->value);
+        })
             ->whereHas('preference', function($q) use ($userPreferences, $userGenderIdentity) {
                 $q->where('value', "IN", $userPreferences);
             })
@@ -122,8 +121,8 @@ class UserController extends Controller
                     $activityNodeQuery->where('name', 'IN', $userActivityArr);
                 });
             })
-            ->get()
-            ->unique();
+            ->get()->unique()->take(5)
+            ;
 
         return response($initialUserPool, 200);
 

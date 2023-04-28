@@ -65,6 +65,16 @@ class User extends NeoEloquent implements Authenticatable
         return $this->hasMany(UserInterest::class, 'HAS_INTEREST');
     }
 
+    public function sentMessages()
+    {
+        return $this->hasMany(UserMessage::class, 'SENT_MESSAGE');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(UserMessage::class, 'RECEIVED_MESSAGE');
+    }
+
 
     public function identifiesAs()
     {
