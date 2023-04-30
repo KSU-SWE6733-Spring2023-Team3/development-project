@@ -2,11 +2,11 @@ import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } fr
 import globalStyles from "../../../styles/global";
 import * as React from "react";
 import { useAuth } from "../../../context/auth";
-import * as ImagePicker from "expo-image-picker";
 import { postRequest } from "../../../util/ajax";
 import { z } from "zod";
 import { useState } from "react";
 import {Redirect, useRouter } from "expo-router";
+import MediaSelector from "../../mediaSelector";
 
 
 
@@ -32,26 +32,6 @@ export default function RegistrationForm() {
     const { signIn } = useAuth();
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
-    const handleChoosePhoto = async () => {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-            return;
-        }
-
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 4],
-            quality: 1,
-        });
-
-
-        if (!result.canceled) {
-            setFormData({ ...formData, profilePicture: result.assets[0].uri });
-        }
-    };
 
     const handleNameChange = (text: string) => {
 
@@ -97,20 +77,7 @@ export default function RegistrationForm() {
     return (
         <>
             <Text style={globalStyles.title}>Registration</Text>
-            <TouchableOpacity style={formData.profilePicture ? 
-            { width: 150, height: 150, backgroundColor: 'gray', borderRadius: 75, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', zIndex: 0 }:
-            { width: 150, height: 150, borderRadius: 75, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', zIndex: 0 }
-        
-        } onPress={handleChoosePhoto}>
-                {formData.profilePicture ? (
-                    <Image style={{ zIndex: 1, width: '100%', height: '100%', resizeMode: 'contain', marginBottom: -25 }} source={{ uri: formData.profilePicture }} />
-                ) : (
-                    <View style={styles.profilePicturePlaceholder}>
-                        <Text style={{ ...styles.text }}>Upload Profile Picture</Text>
-                    </View>
-                )}
-                <Text style={{ marginTop: 10 }}>Choose Photo</Text>
-            </TouchableOpacity>
+           <MediaSelector selectType={"single"} />
             <TextInput
                 style={globalStyles.input}
                 placeholderTextColor="#000"
@@ -159,5 +126,4 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff'
     }
-
 });
