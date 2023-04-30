@@ -21,6 +21,7 @@ Route::controller(\App\Http\Controllers\LoginController::class)->group(function(
 
 Route::controller(\App\Http\Controllers\UserController::class)->group(function() {
     Route::post('/user', 'store');
+    Route::post('/user/profile', 'metadata');
 });
 
 Route::middleware('auth:sanctum,throttle:1,1000')->group( function () {

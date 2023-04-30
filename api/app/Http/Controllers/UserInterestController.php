@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserInterest;
 use App\Models\ZipCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class UserInterestController extends Controller
@@ -31,7 +32,6 @@ class UserInterestController extends Controller
     public function store(Request $request)
     {
         $userInterests = $request->input('interests');
-
 
         if(empty($userInterests))
         {

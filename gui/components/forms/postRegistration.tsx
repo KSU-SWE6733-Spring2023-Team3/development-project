@@ -148,11 +148,24 @@ export default function PostRegistration() {
 			});
 		}
 
+		let secondaryRequestData = {
+			'zipCode': zip,
+			'gender': sex,
+			'preferences': desire,
+			'age': age
+		};
+
+
 		postRequest('api/user/interest', {'interests': formattedInterests}).then(response => {
 			if(response.data.hasOwnProperty('success')) {
-				router.replace('/');
+				postRequest('api/user/profile', secondaryRequestData).then((response) => {
+					if(response.data.hasOwnProperty('success')) {
+						router.replace('/');
+					}
+				});
 			}
 		});
+
 
 	};
 
