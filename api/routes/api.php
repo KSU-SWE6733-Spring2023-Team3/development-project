@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum,throttle:1,1000')->group( function () {
 
     Route::controller(App\Http\Controllers\UserInterestController::class)->group(function() {
         Route::post('/user/interest', 'store');
+        Route::post('/user/profile', 'metadata');
         Route::get('/user/interest', 'list');
         Route::get('/user/interest/{email}', 'show');
         Route::get('/activity', 'activities');
