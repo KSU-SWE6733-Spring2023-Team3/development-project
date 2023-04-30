@@ -33,7 +33,6 @@ class UserInterestController extends Controller
     {
         $userInterests = $request->input('interests');
 
-Log::debug();
         if(empty($userInterests))
         {
             return response()->json([

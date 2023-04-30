@@ -141,7 +141,7 @@ class UserController extends Controller
 
     public function metadata(Request $request)
     {
-        $zip = $request->input("zip");
+        $zip = $request->input("zipCode");
         $gender = $request->input("gender");
         $preferences = $request->input('preferences');
         $age = $request->input('age');
@@ -149,17 +149,16 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        $zipNode = ZipCode::where('value', '=',"\"$zip\"")->first();
+
+        $zipNode = ZipCode::where('value', '=', "\"$zip\"")->first();
         $user->zipCode()->save($zipNode);
 
-        $genderNode = Gender::where('value', '=',$gender)->first();
-        $user->identifiesAs->save($genderNode);
+        $genderNode = Gender::where('value', '=', ucfirst($gender))->first();
+        $user->identifiesAs()->save($genderNode);
 
-        $preferencesNodes = Gender::whereIn('value', $preferences)->get();
-        foreach($preferencesNodes as $preferenceNode)
-        {
-            $user->preferences()->save($preferenceNode);
-        }
+
+        $preferenceNode = Gender::where('value', ucfirst($preferences))->get();
+        $user->preferences()->save($preferenceNode);
 
         $ageNode = Age::where('value', $age)->first();
         $user->age()->save($ageNode);
