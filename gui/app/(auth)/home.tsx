@@ -4,6 +4,7 @@ import { View } from '../../components/Themed';
 import * as React from "react";
 import { Link } from 'expo-router';
 import OauthGithub from "../../components/auth/oauthGithub";
+import OauthOptions from "../../components/auth/oauthOptions";
 
 export default function LoginLayout() {
     return (
@@ -16,9 +17,7 @@ export default function LoginLayout() {
                 <Text style={globalStyles.text}> Join a community of adventurous singles and start your journey to love! </Text>
                 <Link style={{...globalStyles.text, ...globalStyles.btn}} href="/(auth)/login">Login!</Link>
                 <Link style={{...globalStyles.text, ...globalStyles.btn}} href="/(auth)/register">Sign Up!</Link>
-                <View>
-                    <OauthGithub/>
-                </View>
+                <OauthOptions />
             </View>
         </ImageBackground>
     );

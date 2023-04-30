@@ -97,7 +97,8 @@ class LoginController extends Controller
     private function validateProvider($provider)
     {
         $supportedProvidersArr = [
-            'github'
+            'github',
+            'google',
         ];
 
         if(!in_array($provider, $supportedProvidersArr))

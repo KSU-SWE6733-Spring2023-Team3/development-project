@@ -7,6 +7,7 @@ import {useAuth} from "../../../context/auth";
 type oauthButtonProps = {
   provider: string,
   imagePath: string
+  disabled: boolean
 };
 
 const OauthButton = (props: oauthButtonProps) =>  {
@@ -25,7 +26,7 @@ const OauthButton = (props: oauthButtonProps) =>  {
 
     return (
         <React.Fragment>
-            <TouchableOpacity onPress={handleOauthRequest}>
+            <TouchableOpacity onPress={handleOauthRequest} disabled={props.disabled}>
                 <Image source={props.imagePath} style={styles.itemImage} />
             </TouchableOpacity>
         </React.Fragment>
