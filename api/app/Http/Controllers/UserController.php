@@ -157,7 +157,7 @@ class UserController extends Controller
         $user->identifiesAs()->save($genderNode);
 
 
-        $preferenceNode = Gender::where('value', ucfirst($preferences))->get();
+        $preferenceNode = Gender::where('value', ucfirst($preferences))->first();
         $user->preference()->save($preferenceNode);
 
         $ageNode = Age::where('value', $age)->first();
