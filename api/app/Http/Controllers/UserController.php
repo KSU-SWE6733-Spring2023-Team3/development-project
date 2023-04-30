@@ -113,9 +113,9 @@ class UserController extends Controller
             ->whereHas('preference', function($q) use ($userPreferences, $userGenderIdentity) {
                 $q->where('value', "IN", $userPreferences);
             })
-            ->whereHas('ageRange', function($q) use ($ageRangeStart, $ageRangeEnd) {
-                $q->where('value', '>', $ageRangeStart)->where('value','<', $ageRangeEnd);
-            })
+//            ->whereHas('ageRange', function($q) use ($ageRangeStart, $ageRangeEnd) {
+//                $q->where('value', '>', $ageRangeStart)->where('value','<', $ageRangeEnd);
+//            })
             ->whereHas('interests', function($userInterestNodeQuery) use ($userActivityArr) {
                 $userInterestNodeQuery->whereHas('activity', function($activityNodeQuery) use ($userActivityArr) {
                     $activityNodeQuery->where('name', 'IN', $userActivityArr);
@@ -136,6 +136,40 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+
+
+    public function metadata(Request $request)
+    {
+        $zip = $request->input("zip");
+        $gender = $request->input("gender");
+        $preferences = $request->input('preferences');
+        $age = $request->input('age');
+
+
+        $user = $request->user();
+
+        $zipNode = ZipCode::where('value', $zip)->first();
+        $user->zipCode()->save($zipNode);
+
+        $genderNode = Gender::where('value', $gender)->first();
+        $user->identifiesAs->save($genderNode);
+
+        $preferencesNodes = Gender::whereIn('value', $preferences)->get();
+        foreach($preferencesNodes as $preferenceNode)
+        {
+            $user->preferences()->save($preferenceNode);
+        }
+
+        $ageNode = Age::where('value', $age)->first();
+        $user->age()->save($ageNode);
+
+
+        return response()->json([
+            'success' => 'Everything was saved successfully!'
+        ], 200);
+
+
     }
 
     /**
