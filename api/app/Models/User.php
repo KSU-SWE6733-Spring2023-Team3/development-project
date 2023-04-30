@@ -101,5 +101,10 @@ class User extends NeoEloquent implements Authenticatable
         return $this->hasMany(Age::class, 'IN_AGE_RANGE_PREFERENCE');
     }
 
+    public function providers()
+    {
+        return $this->hasMany(Provider::class, 'HAS_PROVIDER');
+    }
+
 
 }

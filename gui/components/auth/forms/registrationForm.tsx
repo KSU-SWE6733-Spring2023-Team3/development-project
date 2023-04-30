@@ -94,6 +94,7 @@ export default function RegistrationForm() {
 
     };
 
+
     return (
         <>
             <Text style={globalStyles.title}>Registration</Text>
