@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(\App\Http\Controllers\LoginController::class)->group(function() {
-   Route::post('/login', 'authenticate')->name('login');
+    Route::get('/login/{provider}', 'redirectToProvider')->name('redirectToProvider');
+    Route::get('/login/{provider}/callback', 'handleProviderCallback')->name('redirectToProviderCallback');
+    Route::post('/login', 'authenticate')->name('login');
 });
 
 Route::controller(\App\Http\Controllers\UserController::class)->group(function() {
