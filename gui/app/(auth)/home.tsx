@@ -3,8 +3,8 @@ import globalStyles from "../../styles/global";
 import { View } from '../../components/Themed';
 import * as React from "react";
 import { Link } from 'expo-router';
-import OauthGithub from "../../components/auth/oauthGithub";
-import OauthOptions from "../../components/auth/oauthOptions";
+import OauthGithub from "../../components/auth/oauth/oauthGithub";
+import OauthOptions from "../../components/auth/oauth/oauthOptions";
 
 export default function LoginLayout() {
     return (

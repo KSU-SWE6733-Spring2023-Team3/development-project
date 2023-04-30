@@ -1,9 +1,9 @@
 import * as React from "react";
-import OauthButton from "./forms/oauthButton";
+import OauthButton from "./oauthButton";
 
 export default function OauthGithub() {
 
-    const localImagePath = "../../assets/images/github/github-mark.svg";
+    const localImagePath = "../../../assets/images/github/github-mark.svg";
     const provider = "github";
     const disabled = true;
 
