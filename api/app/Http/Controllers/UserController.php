@@ -149,10 +149,10 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        $zipNode = ZipCode::where('value', $zip)->first();
+        $zipNode = ZipCode::where('value', '=',"\"$zip\"")->first();
         $user->zipCode()->save($zipNode);
 
-        $genderNode = Gender::where('value', $gender)->first();
+        $genderNode = Gender::where('value', '=',$gender)->first();
         $user->identifiesAs->save($genderNode);
 
         $preferencesNodes = Gender::whereIn('value', $preferences)->get();

@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserInterest;
 use App\Models\ZipCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class UserInterestController extends Controller
@@ -32,7 +33,7 @@ class UserInterestController extends Controller
     {
         $userInterests = $request->input('interests');
 
-
+Log::debug();
         if(empty($userInterests))
         {
             return response()->json([
