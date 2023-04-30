@@ -1,6 +1,7 @@
 import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import * as ImagePicker from "expo-image-picker";
+import {postRequest} from "../util/ajax";
 
 
 export default function MediaSelector(props: any) {
@@ -8,7 +9,7 @@ export default function MediaSelector(props: any) {
 
     const selectMultiple = props.selectType === "single";
 
-    const handleChoosePhoto = async () => {
+    const handleChooseMedia = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
             alert('Sorry, we need camera roll permissions to make this work!');
@@ -24,7 +25,15 @@ export default function MediaSelector(props: any) {
 
 
         if (!result.canceled) {
-            setFormData({ ...formData, profilePicture: result.assets[0].uri });
+            // setFormData({ ...formData, profilePicture: result.assets[0].uri });
+
+            postRequest('api/user/media', result).then((response) => {
+                    // handle error / success here.
+                    // Either [ 'success' => <success_msg> ]
+                    // OR
+                    // [ 'error' => <error_msg> ]
+                }
+            );
         }
     };
 

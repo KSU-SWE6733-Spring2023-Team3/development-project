@@ -33,6 +33,13 @@ Route::middleware('auth:sanctum')->group( function () {
        Route::get('/user', 'index');
     });
 
+    Route::controller(App\Http\Controllers\UserMediaController::class)->group(function() {
+       Route::get('/user/media', 'index');
+       Route::post('/user/media', 'store');
+
+    });
+
+
     Route::controller(App\Http\Controllers\LogoutController::class)->group(function() {
         Route::get('/logout', 'logout');
     });
