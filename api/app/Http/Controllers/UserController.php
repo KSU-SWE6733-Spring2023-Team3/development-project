@@ -42,7 +42,7 @@ class UserController extends Controller
 
     // Unique Constraints
     public const EMAIL_EXISTS_ERR_MSG = "An account using this email address already exists!.";
-
+    public const USER_CREATE_FAILED_ERR_MSG = "Failed to create user.";
 
     /*
      * Success messages
@@ -250,9 +250,9 @@ class UserController extends Controller
         if(Auth::attempt($credentials))
         {
             $request->session()->regenerate();
-            return response('Login success', 200);
+            return response()->json(['success' => self::USER_CREATED_SUCCESS_MSG], 200);
         }
-        return response()->json(['success' => self::USER_CREATED_SUCCESS_MSG], 200);
+        return response()->json(['error' => self::USER_CREATE_FAILED_ERR_MSG], 200);
 
     } // END store()
 
