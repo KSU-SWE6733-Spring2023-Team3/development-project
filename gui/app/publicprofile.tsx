@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, Button, TextInput } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, Button } from 'react-native';
 import { ResizeMode, Video } from 'expo-av';
-import { Entypo } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import Modal from 'react-native-modal';
-import { useRouter } from "expo-router";
-
 
 type Content = {
     id: string
@@ -64,46 +60,6 @@ const data: Content[] = [
         type: 'image',
         uri: 'https://randomuser.me/api/portraits/men/3.jpg',
     },
-    {
-        id: '11',
-        type: 'video',
-        uri: 'https://www.w3schools.com/html/movie.mp4',
-    },
-    {
-        id: '12',
-        type: 'image',
-        uri: 'https://randomuser.me/api/portraits/women/4.jpg',
-    },
-    {
-        id: '13',
-        type: 'image',
-        uri: 'https://randomuser.me/api/portraits/men/1.jpg',
-    },
-    {
-        id: '14',
-        type: 'video',
-        uri: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    },
-    {
-        id: '15',
-        type: 'image',
-        uri: 'https://randomuser.me/api/portraits/women/2.jpg',
-    },
-    {
-        id: '16',
-        type: 'image',
-        uri: 'https://randomuser.me/api/portraits/men/1.jpg',
-    },
-    {
-        id: '17',
-        type: 'video',
-        uri: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    },
-    {
-        id: '18',
-        type: 'image',
-        uri: 'https://randomuser.me/api/portraits/women/2.jpg',
-    },
 ]
 
 const UserProfileScreen = () => {
@@ -116,8 +72,6 @@ const UserProfileScreen = () => {
         image: 'https://randomuser.me/api/portraits/men/1.jpg',
         intests: ['Bouldering', 'Backpacking', 'Hiking']
     }
-
-    const router = useRouter()
 
     // @ts-ignore
     const renderItem = ({ item }) => {
@@ -150,28 +104,14 @@ const UserProfileScreen = () => {
     };
 
     const handleEditProfile = () => {
-        router.push('editprofile')
-    }
 
-    const handleUpload = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            quality: 1,
-        });
-
-        console.log(result);
-
-        if (!result.canceled) {
-            const uri = result.assets[0].uri
-
-            //TODO:   implement the fetch functionality here
-        }
     }
 
     const handleImagePress = (image: Content) => {
         setSelectedImage(image);
         setModalVisible(true);
     };
+
 
     return (
         <>
@@ -180,12 +120,12 @@ const UserProfileScreen = () => {
                 <View style={styles.profileContainer}>
                     <View style={styles.profilImageContainer}>
                         <Image
-                            source={{ uri: profileInfo.image }}
+                            source={{ uri: 'https://randomuser.me/api/portraits/men/1.jpg' }}
                             style={styles.image}
                         />
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.name}>{profileInfo.name}</Text>
+                    <Text style={styles.name}>{profileInfo.name}</Text>
                         <Text style={styles.age}>{profileInfo.age}</Text>
                         {/* <Text style={styles.bio}>
                             {profileInfo.bio}
@@ -197,14 +137,7 @@ const UserProfileScreen = () => {
                             </View>
                             ))}
                         </View>
-                        <TouchableOpacity onPress={handleEditProfile}>
-
-                            <View style={styles.editProfile}>
-                                <Text style={styles.editProfileText}>Edit Profile</Text>
-                            </View>
-                        </TouchableOpacity>
                     </View>
-
                 </View>
                 <FlatList
                     data={data}
@@ -214,40 +147,22 @@ const UserProfileScreen = () => {
                     numColumns={3}
                     contentContainerStyle={styles.contentContainer}
                 />
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <TouchableOpacity onPress={handleUpload}>
-                        <View style={styles.uploadBtn}>
-                            <Entypo name="upload" size={24} color="white" />
-                        </View>
-                    </TouchableOpacity>
-                </View>
             </View>
+
             <Modal isVisible={modalVisible} onBackdropPress={() => setModalVisible(false)} onBackButtonPress={() => setModalVisible(false)}>
                 {
                     selectedImage.type === 'image' ?
-                        <View style={{ flex: 1 }}>
-                            <Image source={{ uri: selectedImage.uri }} style={styles.modalImage} resizeMode="contain" />
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 20 }}>
-
-                                <Button title='Delete' color='red' />
-                                <Button title='Make Profile picture' />
-                            </View>
-                        </View>
+                        <Image source={{ uri: selectedImage.uri }} style={styles.modalImage} resizeMode="contain" />
                         :
-                        <View style={{ flex: 1 }}>
-                            <Video
-                                source={{ uri: selectedImage.uri }}
-                                style={styles.modalImage}
+                        <Video
+                            source={{ uri: selectedImage.uri }}
+                            style={styles.modalImage}
 
-                                resizeMode={"contain" as ResizeMode}
-                                shouldPlay={false}
-                                isLooping={false}
-                                useNativeControls
-                            />
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: 20 }}>
-                                <Button title='Delete' color='red' />
-                            </View>
-                        </View>
+                            resizeMode={"contain" as ResizeMode}
+                            shouldPlay={false}
+                            isLooping={false}
+                            useNativeControls
+                        />
                 }
             </Modal>
 
@@ -338,17 +253,6 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 14,
         fontWeight: '600'
-    },
-    uploadBtn: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        backgroundColor: 'blue',
-        position: 'absolute',
-        bottom: 10,
-        // right: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
     }
 
 });
