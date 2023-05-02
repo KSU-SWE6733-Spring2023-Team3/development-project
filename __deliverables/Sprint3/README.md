@@ -1,4 +1,4 @@
-# Sprint 2 Deliverables
+# Sprint 3 Deliverables
 
 
 ## Story point forecast
@@ -25,28 +25,29 @@ Continuous Integration is still in place. Appropriate configuration files can be
 
 ## Sprint Burndown Chart
 
+The [Sprint Burndown Chart](./sprint_3_burndown_report.PNG) was generated using ZenHub. We estimated we could complete **11** points this sprint, which we ended up doing. Due to the integration between Github and Zenhub, the chart is difficult to configure. All stories were accepted during review, so it shows a sharp drop-off, when work was completed more gradually.
+
 ## Scrum
 
-Scrums were conducted during this sprint. A [recording of one of these SCRUMs](https://kennesawedu.sharepoint.com/:v:/r/sites/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/Shared%20Documents/General/Recordings/Meeting%20in%20_General_-20230411_200645-Meeting%20Recording.mp4?csf=1&web=1)
-can be viewed as long as you are logged in with your KSU account.
+Scrums were conducted during this sprint. Unfortunately, we experienced some technical difficulty during the Scrum we recorded. [The spliced Scrum recording](https://clipchamp.com/watch/5bm9bdJL9HM?utm_source=share&utm_medium=social&utm_campaign=watch) is available for viewing.
 
 
 ## Pair programming
 
 Pair programming was not used as often during this sprint due to time constaints and obligations outside of school. One quick pair-debugging session can be seen with your KSU account.
-[The Pair Programming Session](https://kennesawedu.sharepoint.com/:v:/s/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/EfvRIrtvuwZEt4KSPWFcECoBC6WRVITCUSxL8CeVXE6tVQ?e=0cB2wZ) was shared by direct access. If you have trouble viewing, please let us know and we will send a link directly.
+[The Pair Programming Session](https://kennesawedu.sharepoint.com/:v:/s/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/EfvRIrtvuwZEt4KSPWFcECoBC6WRVITCUSxL8CeVXE6tVQ?e=0cB2wZ). If you have trouble viewing, please let us know and we will send a link directly.
 
 ## Test-first
 
 Unit tests can be found in the [API tests directory](api/tests/Feature/). To run the unit tests, follow the instructions in the [API README](api/README.md) to create a new API instance. By default, database connection is not allowed, so contact the team to gain access. Alternatively, you can set up a Neo4j database locally and connect the API to it.
-An example of this running in Sprint e can be found in [unit_tests_sprint_3.png](unit_tests_sprint_3.png).
+
 
 
 Behavior driven tests can be found in the [tests](../../tests) directory. There are several new and improved tests since the last sprint.
 
 ## Sprint Review
 
-
+Sprint Review was conducted. A recording of this can be found [as long as you are logged in with your KSU account]().
 
 ## Project Demo
 
