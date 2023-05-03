@@ -47,7 +47,7 @@ Behavior driven tests can be found in the [tests](../../tests) directory. There 
 
 ## Sprint Review
 
-Sprint Review was conducted. A recording of this can be found [as long as you are logged in with your KSU account]().
+Sprint Review was conducted. A recording of this can be found [as long as you are logged in with your KSU account](https://kennesawedu.sharepoint.com/:v:/s/Team-Spring2023Group3SWE6733-EmergingSoftwareEngineeringProc/ERA9uk2S9UJMqX2f9oMGqrMBhEJbPFIaq_ofjHkJsEbV5w?e=dWnzfw).
 
 ## Project Demo
 
